@@ -1,0 +1,287 @@
+/*
+ * Globals
+ */
+
+/* Links */
+a,
+a:focus,
+a:hover {
+    color: #fff;
+}
+
+/* Custom default button */
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focus {
+    color: #333;
+    text-shadow: none;
+    /* Prevent inheritance from `body` */
+    background-color: #fff;
+    border: .05rem solid #fff;
+}
+
+#control-explanation {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    font-size: 24px;
+    background-color: #FFF;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+/*
+ * Base structure
+ */
+
+html,
+body {
+    height: 100%;
+    background-color: #FFF;
+}
+
+body {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-pack: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    color: #333;
+    text-shadow: 0 .05rem .1rem rgba(200, 200, 200, .5);
+    box-shadow: inset 0 0 5rem rgba(200, 200, 200, .5);
+}
+
+.cover-container {
+    //max-width: 42em;
+}
+
+
+/*
+ * Header
+ */
+.masthead {
+    margin-bottom: 2rem;
+}
+
+.masthead-brand {
+    margin-bottom: 0;
+}
+
+.nav-masthead .nav-link {
+    padding: .25rem 0;
+    font-weight: 700;
+    color: rgba(3, 3, 3, .5);
+    background-color: transparent;
+    border-bottom: .25rem solid transparent;
+}
+
+.nav-masthead .nav-link:hover,
+.nav-masthead .nav-link:focus {
+    border-bottom-color: rgba(255, 255, 255, .25);
+}
+
+.nav-masthead .nav-link+.nav-link {
+    margin-left: 1rem;
+}
+
+.nav-masthead .active {
+    color: #fff;
+    border-bottom-color: #fff;
+}
+
+@media (min-width: 48em) {
+    .masthead-brand {
+        float: left;
+    }
+
+    .nav-masthead {
+        float: right;
+    }
+}
+
+
+/*
+ * Cover
+ */
+.cover {
+    padding: 0 1.5rem;
+}
+
+.cover .btn-lg {
+    padding: .75rem 1.25rem;
+    font-weight: 700;
+}
+
+
+/*
+ * Footer
+ */
+.mastfoot {
+    color: rgba(255, 255, 255, .5);
+}
+
+
+#control svg {
+    //border: solid 1px #666;
+    overflow: hidden;
+}
+
+#control path {
+    //fill: yellow;
+    stroke: #FFF;
+    stroke-width: .5px;
+}
+
+#control circle {
+    fill: #ccc;
+    stroke: #000;
+    pointer-events: none;
+}
+
+#my_dataviz::-webkit-scrollbar {
+    width: 10px;
+    background-color: #EEE;
+}
+
+#my_dataviz::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #EEE;
+    border-radius: 10px;
+}
+
+#my_dataviz::-webkit-scrollbar-thumb {
+    background-color: #AAA;
+    border-radius: 10px;
+    background-image: -webkit-linear-gradient(90deg,
+            rgba(0, 0, 0, .2) 25%,
+            transparent 25%,
+            transparent 50%,
+            rgba(0, 0, 0, .2) 50%,
+            rgba(0, 0, 0, .2) 75%,
+            transparent 75%,
+            transparent);
+}
+
+.PuRdq0-9 {
+    fill: rgb(247, 244, 249)
+}
+
+.PuRdq1-9 {
+    fill: rgb(231, 225, 239)
+}
+
+.PuRdq2-9 {
+    fill: rgb(212, 185, 218)
+}
+
+.PuRdq3-9 {
+    fill: rgb(201, 148, 199)
+}
+
+.PuRdq4-9 {
+    fill: rgb(223, 101, 176)
+}
+
+.PuRdq5-9 {
+    fill: rgb(231, 41, 138)
+}
+
+.PuRdq6-9 {
+    fill: rgb(206, 18, 86)
+}
+
+.PuRdq7-9 {
+    fill: rgb(152, 0, 67)
+}
+
+.PuRdq8-9 {
+    fill: rgb(103, 0, 31)
+}
+
+.PuBuq0-9 {
+    fill: rgb(255, 247, 251)
+}
+
+.PuBuq1-9 {
+    fill: rgb(236, 231, 242)
+}
+
+.PuBuq2-9 {
+    fill: rgb(208, 209, 230)
+}
+
+.PuBuq3-9 {
+    fill: rgb(166, 189, 219)
+}
+
+.PuBuq4-9 {
+    fill: rgb(116, 169, 207)
+}
+
+.PuBuq5-9 {
+    fill: rgb(54, 144, 192)
+}
+
+.PuBuq6-9 {
+    fill: rgb(5, 112, 176)
+}
+
+.PuBuq7-9 {
+    fill: rgb(4, 90, 141)
+}
+
+.PuBuq8-9 {
+    fill: rgb(2, 56, 88)
+}
+
+.OrRdq0-9 {
+    fill: rgb(255, 247, 236)
+}
+
+.OrRdq1-9 {
+    fill: rgb(254, 232, 200)
+}
+
+.OrRdq2-9 {
+    fill: rgb(253, 212, 158)
+}
+
+.OrRdq3-9 {
+    fill: rgb(253, 187, 132)
+}
+
+.OrRdq4-9 {
+    fill: rgb(252, 141, 89)
+}
+
+.OrRdq5-9 {
+    fill: rgb(239, 101, 72)
+}
+
+.OrRdq6-9 {
+    fill: rgb(215, 48, 31)
+}
+
+.OrRdq7-9 {
+    fill: rgb(179, 0, 0)
+}
+
+.OrRdq8-9 {
+    fill: rgb(127, 0, 0)
+}
+
+#control {
+    height: 200px;
+    width: 200px;
+    background-color: #FFF;
+    margin-bottom: 5px;
+}
+
+#my_dataviz {
+    height: 900px;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: rgba(230, 230, 230, 0.3)
+}

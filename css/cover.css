@@ -261,3 +261,28 @@ body {
 .OrRdq8-9 {
   fill: rgb(127, 0, 0)
 }
+
+#control-explanation {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  font-size: 24px;
+  background-color: #333;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+#control {
+  height: 200px;
+  width: 200px;
+  background-color: #333;
+  margin-bottom: 5px;
+}
+
+#my_dataviz {
+  height: 900px;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: rgba(20, 20, 20, 0.3)
+}

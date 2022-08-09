@@ -540,7 +540,7 @@ function update(data, sanitized_row_name, x, y) {
     .attr("y", d => y(Math.log(1 + d.value)))
     .attr("width", x.bandwidth())
     .attr("height", d => height - y(Math.log(1 + d.value)))
-    .attr("fill", "#FFFFFF")
+    .attr("fill", "#333")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 }
 
@@ -584,10 +584,15 @@ function setup(row_name, sets) {
   // Add Y axis
   var y = d3.scaleLinear()
     .domain([0, 3.5])
-    .range([height, 0]);
+    .range([height, 0])
+
+  var axisY = d3.axisLeft(y)
+    .tickFormat(function (interval, i) {
+      return (i + 1) % 2 !== 0 ? '' : interval;
+    });
   svg.append("g")
     .attr("class", "myYaxis")
-    .call(d3.axisLeft(y));
+    .call(axisY);
 
   // add a title  
   svg.append("text")
@@ -596,8 +601,13 @@ function setup(row_name, sets) {
     .attr("text-anchor", "middle")
     .style("font-size", "12px")
     .style("text-decoration", "none")
-    .style("fill", "#FFFFFF")
-    .text(row_name);
+    .style("fill", "#333")
+    .text(function (d) {
+      var a = row_name;
+      a = a.replace("HUMAN", "HUMAN ");
+      a = a.replace("MOUSE", "MOUSE ");
+      return a;
+    });
 
   return [svg, x, y];
 }
@@ -720,7 +730,7 @@ function displayControlPoints() {
     [0, 0],
     [0, 200],
     [200, 200],
-    [200, -200]
+    [200, 0]
   ]);
   // wrong orientation, the reverse fixes the problem
   function circle(cx, cy, r, n) {
@@ -733,7 +743,7 @@ function displayControlPoints() {
     points = points.reverse();
     return points;
   }
-  bounds = d3.geom.polygon(circle(100, 100, 98, 14));
+  //bounds = d3.geom.polygon(circle(100, 100, 98, 14));
   var line = d3.line()
     .curve(d3.curveBasisClosed)
   //var voronoi = d3.geom.voronoi(vertices).map(function (cell) { return bounds.clip(cell); });
@@ -751,7 +761,7 @@ function displayControlPoints() {
   svg.selectAll("path")
     .data(voronoi)
     .enter().append("svg:path")
-    .attr("clip-path", "url(#clipCircle)") // make a circular clip around everything
+    //.attr("clip-path", "url(#clipCircle)") // make a circular clip around everything
     .attr("class", function (d, i) { // color the cells
       // the identify of the cells is no longer given by the index. We need to compute the
       // identify again if we need it. Maybe compute the center of mass and pick a winner with
@@ -776,7 +786,7 @@ function displayControlPoints() {
       if (set_variations[winner].c.circle != 0) {
         cmap = "OrRd";
       }
-      return cmap + "q" + (i % 9) + "-9";
+      return cmap + "q" + (4 % 9) + "-9";
     })
     //.attr("d", function (d) { return "M" + d.join("L") + "Z"; });
     .attr("d", function (point, i) { return line(resampleSegments(voronoi[i])); });

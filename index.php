@@ -16,7 +16,7 @@
 
     <!-- Custom styles for this template -->
     <link href="css/colorbrewer.css" rel="stylesheet">
-    <link href="css/cover.css" rel="stylesheet">
+    <link href="css/cover_bright.css" rel="stylesheet">
   </head>
 
   <body class="text-center">
@@ -41,16 +41,16 @@
       <div class="container">
         <div class="row">
           <div class="col-md-3">
-            <div id="control" style="height: 200px; width: 200px; background-color: #333; margin-bottom: 5px;"></div>
+            <div id="control"></div>
           </div>
           <div class="col-md-9">
-            <div id="control-explanation" style="display: flex; align-items: center; height: 100%; font-size: 24px; background-color: #333; margin-bottom: 5px; text-align: left;">
+            <div id="control-explanation">
               <i>Highlight Mouse-Human hybrids by selecting a circle section.</i>
             </div>
           </div>
         </div>
         <div class="row">
-          <div id="my_dataviz" style="height: 900px; width:100%; overflow-y: scroll; overflow-x: hidden; background-color: rgba(20,20,20,0.3)"></div>
+          <div id="my_dataviz"></div>
         </div>
       </div>
 
