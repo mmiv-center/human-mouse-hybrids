@@ -21,13 +21,27 @@ a:hover {
 }
 
 #control-explanation {
-    display: flex;
-    align-items: center;
-    height: 100%;
+    //display: flex;
+    //align-items: center;
+    //height: 100%;
     font-size: 24px;
-    background-color: #FFF;
-    margin-bottom: 5px;
-    text-align: left;
+    margin-top: 70px;
+    font-style: italic;
+    //background-color: #FFF;
+    //margin-bottom: 5px;
+    //text-align: left;
+}
+
+#control-explanation-detail {
+    //display: flex;
+    //align-items: center;
+    //height: 100%;
+    font-size: 18px;
+    color: #666;
+    font-style: italic;
+    //background-color: #999;
+    //margin-bottom: 5px;
+    //text-align: left;
 }
 
 /*

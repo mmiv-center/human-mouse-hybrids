@@ -44,8 +44,9 @@
             <div id="control"></div>
           </div>
           <div class="col-md-9">
-            <div id="control-explanation">
-              <i>Highlight Mouse-Human hybrids by selecting a circle section.</i>
+            <div style="align-items: center; height: 100%; font-size: 24px; background-color: #FFF; margin-bottom: 5px; text-align: left;">
+              <div id="control-explanation">Highlight Mouse-Human hybrids by selecting a circle section.</div>
+              <div id="control-explanation-detail"></div>
             </div>
           </div>
         </div>

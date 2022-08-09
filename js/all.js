@@ -99,35 +99,40 @@ var set_variations = [
     set: {}, // w1 == 0
     idx: 3,
     c: { x: 0, y: -1, circle: 0, weight: 0 },
-    description: "Highlight all values at the slowest repeating frequency."
+    description: "Highlight all values at the slowest repeating frequency.",
+    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum are used to identify repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
   },
   {
     name: "frequency peak 02",
     set: {}, // w1 == 0
     idx: 4,
     c: { x: 0, y: -1, circle: 3, weight: 0 },
-    description: "Highlight all values at the second slowest repeating frequency."
+    description: "Highlight all values at the second slowest repeating frequency.",
+    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum are used to identify repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
   },
   {
     name: "frequency peak 03",
     set: {}, // w1 == 0
     idx: 5,
     c: { x: 0, y: -1, circle: 3, weight: 0 },
-    description: "Highlight all values at the third repeating frequency."
+    description: "Highlight all values at the third characteristic frequency.",
+    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum are used to identify repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
   },
   {
     name: "frequency peak 04",
     set: {}, // w1 == 0
     idx: 6,
     c: { x: 0, y: -1, circle: 3, weight: 0 },
-    description: "Highlight all values at the fourth repeating frequency."
+    description: "Highlight all values at the fourth repeating frequency.",
+    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum are used to identify repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
   },
   {
     name: "frequency peak 05",
     set: {}, // w1 == 0
     idx: 7,
     c: { x: 0, y: -1, circle: 3, weight: 0 },
-    description: "Highlight all values at the fifth (fastest) repeating frequency."
+    description: "Highlight all values at the fifth (fastest) repeating frequency.",
+    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum are used to identify repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
   },
 
   {
@@ -149,56 +154,63 @@ var set_variations = [
     set: {}, // w1 == 0
     idx: 10,
     c: { x: 0, y: -1, circle: 0, weight: 0 },
-    description: "Highlight relative difference (Jaccard index)."
+    description: "Highlight relative difference (Jaccard index)"
   },
   {
     name: "0",
     set: {}, // w1 == 0
     idx: 11,
     c: { x: -1, y: 0, circle: 0, weight: 300 },
-    description: "Highlight what is in this set (analysis of marginals)."
+    description: "Highlight what is in this set",
+    descLong: "The marginal distribution of mutation values for a given protein and mutation type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
   },
-  {
-    name: "min-q1",
-    set: {}, // w1 == 0
-    idx: 12,
-    c: { x: 0, y: -1, circle: 11, weight: 0 },
-    description: "Highlight all values that are between the minimum and q1."
-  },
-  {
-    name: "q1-q2",
-    set: {}, // w1 == 0
-    idx: 13,
-    c: { x: 0, y: -1, circle: 11, weight: 0 },
-    description: "Highlight all values that are between q1 and q2."
-  },
+  /*  {
+      name: "min-q1",
+      set: {}, // w1 == 0
+      idx: 12,
+      c: { x: 0, y: -1, circle: 11, weight: 0 },
+      description: "Highlight all values that are between the minimum and q1",
+      descLong: "The marginal distribution of mutation values for a given protein and mutation type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+    },
+    {
+      name: "q1-q2",
+      set: {}, // w1 == 0
+      idx: 13,
+      c: { x: 0, y: -1, circle: 11, weight: 0 },
+      description: "Highlight all values that are between q1 and q2",
+      descLong: "The marginal distribution of mutation values for a given protein and mutation type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+    }, */
   {
     name: "q1-q3",
     set: {}, // w1 == 0
-    idx: 14,
+    idx: 12,
     c: { x: 0, y: -1, circle: 11, weight: 100 },
-    description: "Highlight all values that are between q1 and q3."
+    description: "Highlight values in the middle (between q1 and q3)",
+    descLong: "The marginal distribution of mutation values for a given protein and mutation type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
   },
-  {
-    name: "q2-q3",
-    set: {}, // w1 == 0
-    idx: 15,
-    c: { x: 0, y: -1, circle: 11, weight: 0 },
-    description: "Highlight all values that are between q2 and q3."
-  },
+  /*  {
+      name: "q2-q3",
+      set: {}, // w1 == 0
+      idx: 15,
+      c: { x: 0, y: -1, circle: 11, weight: 0 },
+      description: "Highlight all values that are between q2 and q3",
+      descLong: "The marginal distribution of mutation values for a given protein and mutation type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+    },
   {
     name: "q3-max",
     set: {}, // w1 == 0
     idx: 16,
     c: { x: 0, y: -1, circle: 11, weight: 0 },
-    description: "Highlight all values that are between q3 and the maximum value."
-  },
+    description: "Highlight all values that are between q3 and the maximum value",
+    descLong: "The marginal distribution of mutation values for a given protein and mutation type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+  }, */
   {
     name: "extremes",
     set: {}, // w1 == 0
-    idx: 17,
+    idx: 13,
     c: { x: 0, y: -1, circle: 11, weight: 0 },
-    description: "Highlight all values that are below q1 or above q3."
+    description: "Highlight all extreme values, values that are below q1 or above q3",
+    descLong: "The marginal distribution of mutation values for a given protein and mutation type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
   },
 ];
 
@@ -330,16 +342,16 @@ function computeSetChange(all_data, w1, w2) { // data should contain the set and
     }
     var q = quartiles(d);
 
-    set_variations[idx4("min-q1")].set = objectMap(setA, function (a) { if (a > 0 && a < q.q1) return q.q3; else return a; });
-    set_variations[idx4("q1-q2")].set = objectMap(setA, function (a) { if (a > 0 && a >= q.q1 && a < q.q2) return q.min; else return a; });
+    //set_variations[idx4("min-q1")].set = objectMap(setA, function (a) { if (a > 0 && a < q.q1) return q.q3; else return a; });
+    //set_variations[idx4("q1-q2")].set = objectMap(setA, function (a) { if (a > 0 && a >= q.q1 && a < q.q2) return q.min; else return a; });
     set_variations[idx4("q1-q3")].set = objectMap(setA, function (a) { if (a > 0 && a >= q.q1 && a <= q.q3) return 0.0; else return a; });
-    set_variations[idx4("q2-q3")].set = objectMap(setA, function (a) { if (a > 0 && a >= q.q2 && a <= q.q3) return q.min; else return a; });
-    set_variations[idx4("q3-max")].set = objectMap(setA, function (a) { if (a > 0 && a > q.q3) return q.min; else return a; });
+    //set_variations[idx4("q2-q3")].set = objectMap(setA, function (a) { if (a > 0 && a >= q.q2 && a <= q.q3) return q.min; else return a; });
+    //set_variations[idx4("q3-max")].set = objectMap(setA, function (a) { if (a > 0 && a > q.q3) return q.min; else return a; });
     set_variations[idx4("extremes")].set = objectMap(setA, function (a) {
       if (a > 0 && (a < q.q1 || a > q.q3)) {
         if (a < a.q1)
           return q.min;
-        return q.max;
+        return q.min;
       } else return a;
     });
 
@@ -457,8 +469,16 @@ function computeSetChange(all_data, w1, w2) { // data should contain the set and
     //console.log("pick winner as: " + set_variations[winner].name + " " + set_variations[winner].description);
 
     jQuery('#control-explanation').fadeOut(function () {
-      jQuery(this).html("<i>" + set_variations[winner].description + "</i>").fadeIn();
+      jQuery(this).text(set_variations[winner].description).fadeIn();
     });
+    if (typeof set_variations[winner].descLong !== 'undefined') {
+      jQuery('#control-explanation-detail').fadeOut(function () {
+        jQuery(this).text(set_variations[winner].descLong).fadeIn();
+      });
+    } else {
+      jQuery('#control-explanation-detail').fadeOut();
+    }
+
 
     // interpolate the sets based on the weighted distances to the center
     var comb = {};
@@ -580,6 +600,24 @@ function setup(row_name, sets) {
       return (i + 1) % 20 !== 0 ? '' : label;
     });
 
+  svg.append("text")
+    .attr("class", "x label")
+    .attr("text-anchor", "end")
+    .attr("x", width)
+    .attr("y", height + 28)
+    .attr("font-size", "12px")
+    .text("Modified Protein Residue Site");
+
+  svg.append("text")
+    .attr("class", "y label")
+    .attr("text-anchor", "start")
+    .attr("y", 0)
+    .attr("dy", "-6px")
+    .attr("dx", "-20px")
+    .attr("font-size", "12px")
+    //.attr("transform", "rotate(-90)")
+    .text("Modification Count per Protein Site");
+
   svg.append("g")
     .attr("transform", `translate(0,${height})`)
     .call(axisX)
@@ -623,6 +661,9 @@ function setup(row_name, sets) {
       var a = row_name;
       a = a.replace("HUMAN", "HUMAN ");
       a = a.replace("MOUSE", "MOUSE ");
+      a = a.replace("Chemicald", "Chemical d");
+      a = a.replace("Otherg", "Other g");
+      a = a.replace("linkedg", "linked g");
       return a;
     });
 
