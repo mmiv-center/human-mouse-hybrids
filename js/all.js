@@ -100,7 +100,7 @@ var set_variations = [
     idx: 3,
     c: { x: 0, y: -1, circle: 0, weight: 0 },
     description: "Highlight all values at the slowest repeating frequency.",
-    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum are used to identify repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
+    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
   },
   {
     name: "frequency peak 02",
@@ -108,7 +108,7 @@ var set_variations = [
     idx: 4,
     c: { x: 0, y: -1, circle: 3, weight: 0 },
     description: "Highlight all values at the second slowest repeating frequency.",
-    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum are used to identify repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
+    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
   },
   {
     name: "frequency peak 03",
@@ -116,7 +116,7 @@ var set_variations = [
     idx: 5,
     c: { x: 0, y: -1, circle: 3, weight: 0 },
     description: "Highlight all values at the third characteristic frequency.",
-    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum are used to identify repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
+    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
   },
   {
     name: "frequency peak 04",
@@ -124,7 +124,7 @@ var set_variations = [
     idx: 6,
     c: { x: 0, y: -1, circle: 3, weight: 0 },
     description: "Highlight all values at the fourth repeating frequency.",
-    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum are used to identify repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
+    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
   },
   {
     name: "frequency peak 05",
@@ -132,7 +132,7 @@ var set_variations = [
     idx: 7,
     c: { x: 0, y: -1, circle: 3, weight: 0 },
     description: "Highlight all values at the fifth (fastest) repeating frequency.",
-    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum are used to identify repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
+    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
   },
 
   {
@@ -140,21 +140,21 @@ var set_variations = [
     set: {}, // w1 == 0
     idx: 8,
     c: { x: 0, y: -1, circle: 0, weight: 0 },
-    description: "Highlight where MOUSE and HUMAN are the same."
+    description: "Highlight where MOUSE and HUMAN are the same"
   },
   {
     name: "union",
     set: {}, // w1 == 0
     idx: 9,
     c: { x: 0, y: -1, circle: 0, weight: 0 },
-    description: "Highlight what is added by the other."
+    description: "Highlight what is added by the other"
   },
   {
     name: "Jaccard",
     set: {}, // w1 == 0
     idx: 10,
     c: { x: 0, y: -1, circle: 0, weight: 0 },
-    description: "Highlight relative difference (Jaccard index)"
+    description: "Highlight relative difference using the Jaccard index"
   },
   {
     name: "0",
@@ -473,7 +473,7 @@ function computeSetChange(all_data, w1, w2) { // data should contain the set and
     });
     if (typeof set_variations[winner].descLong !== 'undefined') {
       jQuery('#control-explanation-detail').fadeOut(function () {
-        jQuery(this).text(set_variations[winner].descLong).fadeIn();
+        jQuery(this).html("<p>" + set_variations[winner].descLong + "</p>").fadeIn();
       });
     } else {
       jQuery('#control-explanation-detail').fadeOut();
@@ -844,7 +844,18 @@ function displayControlPoints() {
       if (set_variations[winner].c.circle != 0) {
         cmap = "OrRd";
       }
-      return cmap + "q" + (4 % 9) + "-9";
+      return cmap + "q" + (4 % 9) + "-9 region";
+    })
+    //Our new hover effects
+    .on('mouseover', function (d, i) {
+      d3.select(this).transition()
+        .duration('50')
+        .attr('opacity', '.85');
+    })
+    .on('mouseout', function (d, i) {
+      d3.select(this).transition()
+        .duration('50')
+        .attr('opacity', '1');
     })
     //.attr("d", function (d) { return "M" + d.join("L") + "Z"; });
     .attr("d", function (point, i) { return line(resampleSegments(voronoi[i])); });
