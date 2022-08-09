@@ -64,7 +64,7 @@ function distributeControlPoints() { // start with circle 0
       ci++;
       var x = Math.cos(angle) * radius;
       var y = Math.sin(angle) * radius;
-      set_variations[i].c = { x: cx + x, y: cy + y, circle: set_variations[i].circle, offset_angle: angle, weight: set_variations[i].c.weight };
+      set_variations[i].c = { x: cx + x, y: cy + y, circle: set_variations[i].c.circle, offset_angle: angle, weight: set_variations[i].c.weight };
     }
     if (c == 0) {
       radius *= 0.35;
@@ -753,7 +753,30 @@ function displayControlPoints() {
     .enter().append("svg:path")
     .attr("clip-path", "url(#clipCircle)") // make a circular clip around everything
     .attr("class", function (d, i) { // color the cells
-      return "q" + (i % 9) + "-9";
+      // the identify of the cells is no longer given by the index. We need to compute the
+      // identify again if we need it. Maybe compute the center of mass and pick a winner with
+      // the vertices?
+      var geo_center = d.reduce(function (p, q) {
+        return [p[0] + q[0], p[1] + q[1]];
+      }, [0, 0]);
+      geo_center[0] /= d.length;
+      geo_center[1] /= d.length;
+      var winner = 0;
+      var dwinner = Infinity;
+      for (var j = 0; j < vertices.length; j++) {
+        var dist = (vertices[j][0] - geo_center[0]) * (vertices[j][0] - geo_center[0]) +
+          (vertices[j][1] - geo_center[1]) * (vertices[j][1] - geo_center[1]);
+        if (dist < dwinner) {
+          winner = j;
+          dwinner = dist;
+        }
+      }
+
+      var cmap = "PuBu";
+      if (set_variations[winner].c.circle != 0) {
+        cmap = "OrRd";
+      }
+      return cmap + "q" + (i % 9) + "-9";
     })
     //.attr("d", function (d) { return "M" + d.join("L") + "Z"; });
     .attr("d", function (point, i) { return line(resampleSegments(voronoi[i])); });
