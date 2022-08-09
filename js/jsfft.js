@@ -51,7 +51,7 @@ function peakDetect(data) {
     if (max_value > threshold &&
       energy[i] < threshold &&
       energy[energy.length - 1] < threshold) {
-      console.log(i + max_index, max_value);
+      //console.log(i + max_index, max_value);
       peaks.push(i + max_index);
       phases.push(phase[max_index]);
     }

@@ -486,7 +486,7 @@ var x;
 var y;
 var height = 100;
 var width = 300;
-var margin = { top: 30, right: 30, bottom: 30, left: 25 };
+var margin = { top: 20, right: 30, bottom: 30, left: 25 };
 
 var all_data = {};
 
@@ -524,11 +524,11 @@ function loadData(callback) {
 
 
 // A function that create / update the plot for a given variable:
-function update(data, sanitized_row_name, x, y) {
+function update(data, sanitized_row_name, x, y, dataSetA) {
 
   var svg = d3.select("#my_dataviz svg." + sanitized_row_name);
 
-  var u = svg.selectAll("rect")
+  var u = svg.selectAll("rect.dynamic")
     .data(data)
 
   //margin = { top: 10, right: 10, bottom: 50, left: 30 };
@@ -541,13 +541,15 @@ function update(data, sanitized_row_name, x, y) {
     .attr("width", x.bandwidth())
     .attr("height", d => height - y(Math.log(1 + d.value)))
     .attr("fill", "#333")
+    .attr('class', 'dynamic')
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 }
 
 function setup(row_name, sets) {
   // set the dimensions and margins of the graph
   width = 1300 - margin.left - margin.right;
-  height = 100 - margin.top - margin.bottom;
+  height = 110 - margin.top - margin.bottom;
 
   var bcolor = "#333";
   if (row_name.indexOf("HUMAN") != -1) {
@@ -574,7 +576,8 @@ function setup(row_name, sets) {
 
   var axisX = d3.axisBottom(x)
     .tickFormat(function (interval, i) {
-      return (i + 1) % 20 !== 0 ? '' : interval;
+      var label = interval.replace("loc_", "");
+      return (i + 1) % 20 !== 0 ? '' : label;
     });
 
   svg.append("g")
@@ -594,12 +597,26 @@ function setup(row_name, sets) {
     .attr("class", "myYaxis")
     .call(axisY);
 
+  var u2 = svg.selectAll("rect.static")
+    .data(sets[0])
+
+  // can we have one plot of setA that stays on screen?
+  u2
+    .join("rect")
+    .attr('class', 'static')
+    .attr("x", d => x(d.group))
+    .attr("y", d => y(Math.log(1 + d.value)))
+    .attr("width", x.bandwidth())
+    .attr("height", d => height - y(Math.log(1 + d.value)))
+    .attr("fill", "#BBB");
+  //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
   // add a title  
   svg.append("text")
     .attr("x", (width / 2))
-    .attr("y", 0 - (margin.top / 2))
+    .attr("y", 0/* 0 - (margin.top / 3) */)
     .attr("text-anchor", "middle")
-    .style("font-size", "12px")
+    .style("font-size", "14px")
     .style("text-decoration", "none")
     .style("fill", "#333")
     .text(function (d) {
@@ -638,7 +655,7 @@ function toggleSets(sets, si, sanitized_row_name, x, y) {
     }
   }
 
-  update(sets[si], sanitized_row_name, x, y);
+  update(sets[si], sanitized_row_name, x, y, sets[0]);
   setTimeout(function () {
     toggleSets(sets, si, sanitized_row_name, x, y);
   }, 600);
