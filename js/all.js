@@ -72,7 +72,551 @@ function distributeControlPoints() { // start with circle 0
   }
 }
 
-var set_variations = [
+var demo01 = [
+  { // the first set will always be placed in the center
+    name: "setA",
+    idx: 0,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  }
+];
+var demo02 = [
+  { // the first set will always be placed in the center
+    name: "setA",
+    idx: 0,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setB",
+    idx: 1,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  }
+];
+
+var demo03 = [
+  { // the first set will always be placed in the center
+    name: "setA",
+    idx: 0,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setB",
+    idx: 1,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setC",
+    idx: 2,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  }
+];
+
+var demo04 = [
+  { // the first set will always be placed in the center
+    name: "setA",
+    idx: 0,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setB",
+    idx: 1,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setC",
+    idx: 2,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setD",
+    idx: 3,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  }
+];
+
+
+
+var demo05 = [
+  { // the first set will always be placed in the center
+    name: "setA",
+    idx: 0,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setB",
+    idx: 1,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setC",
+    idx: 2,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setD",
+    idx: 3,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setD",
+    idx: 4,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  }
+];
+
+var demo06 = [
+  { // the first set will always be placed in the center
+    name: "setA",
+    idx: 0,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setB",
+    idx: 1,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setC",
+    idx: 2,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setD",
+    idx: 3,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setD",
+    idx: 4,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setE",
+    idx: 5,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  }
+];
+
+var demo06_weight = [
+  { // the first set will always be placed in the center
+    name: "setA",
+    idx: 0,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setB",
+    idx: 1,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 3000 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setC",
+    idx: 2,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setD",
+    idx: 3,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setD",
+    idx: 4,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setE",
+    idx: 5,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  }
+];
+
+var demo04_01 = [
+  { // the first set will always be placed in the center
+    name: "set41",
+    idx: 0,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setB",
+    idx: 1,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setC",
+    idx: 2,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setD",
+    idx: 3,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAA",
+    idx: 4,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  }
+];
+var demo04_02 = [
+  { // the first set will always be placed in the center
+    name: "set42",
+    idx: 0,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setB",
+    idx: 1,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setC",
+    idx: 2,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setD",
+    idx: 3,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAA",
+    idx: 4,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAB",
+    idx: 5,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  }
+];
+
+var demo04_03 = [
+  { // the first set will always be placed in the center
+    name: "set42",
+    idx: 0,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setB",
+    idx: 1,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setC",
+    idx: 2,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setD",
+    idx: 3,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAA",
+    idx: 4,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAB",
+    idx: 5,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAB",
+    idx: 6,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  }
+];
+
+var demo04_04 = [
+  { // the first set will always be placed in the center
+    name: "set42",
+    idx: 0,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setB",
+    idx: 1,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setC",
+    idx: 2,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setD",
+    idx: 3,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAA",
+    idx: 4,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAB",
+    idx: 5,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAB",
+    idx: 6,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAB",
+    idx: 7,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  }
+];
+
+var demo04_05 = [
+  { // the first set will always be placed in the center
+    name: "set42",
+    idx: 0,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setB",
+    idx: 1,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setC",
+    idx: 2,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setD",
+    idx: 3,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAA",
+    idx: 4,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAB",
+    idx: 5,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAB",
+    idx: 6,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAB",
+    idx: 7,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAB",
+    idx: 8,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  }
+];
+
+var demo04_06 = [
+  { // the first set will always be placed in the center
+    name: "set42",
+    idx: 0,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setB",
+    idx: 1,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setC",
+    idx: 2,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setD",
+    idx: 3,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAA",
+    idx: 4,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAB",
+    idx: 5,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAB",
+    idx: 6,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAB",
+    idx: 7,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAB",
+    idx: 8,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  { // the first set will always be placed in the center
+    name: "setAB",
+    idx: 9,
+    set: {},
+    c: { x: 0, y: 0, circle: 1, weight: 0 },
+    description: "No highlight, ignore the other set."
+  }
+];
+
+
+var demo_max = [
   { // the first set will always be placed in the center
     name: "setA",
     idx: 0,
@@ -100,7 +644,7 @@ var set_variations = [
     idx: 3,
     c: { x: 0, y: -1, circle: 0, weight: 0 },
     description: "Highlight all values at the slowest repeating frequency.",
-    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
+    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
   },
   {
     name: "frequency peak 02",
@@ -108,7 +652,7 @@ var set_variations = [
     idx: 4,
     c: { x: 0, y: -1, circle: 3, weight: 0 },
     description: "Highlight all values at the second slowest repeating frequency.",
-    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
+    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
   },
   {
     name: "frequency peak 03",
@@ -116,7 +660,7 @@ var set_variations = [
     idx: 5,
     c: { x: 0, y: -1, circle: 3, weight: 0 },
     description: "Highlight all values at the third characteristic frequency.",
-    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
+    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
   },
   {
     name: "frequency peak 04",
@@ -124,7 +668,7 @@ var set_variations = [
     idx: 6,
     c: { x: 0, y: -1, circle: 3, weight: 0 },
     description: "Highlight all values at the fourth repeating frequency.",
-    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
+    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
   },
   {
     name: "frequency peak 05",
@@ -132,9 +676,8 @@ var set_variations = [
     idx: 7,
     c: { x: 0, y: -1, circle: 3, weight: 0 },
     description: "Highlight all values at the fifth (fastest) repeating frequency.",
-    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating pattern. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
+    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
   },
-
   {
     name: "difference",
     set: {}, // w1 == 0
@@ -214,6 +757,8 @@ var set_variations = [
   },
 ];
 
+var set_variations = demo_max;
+//var set_variations = demo04;
 
 // compute set change from data1 to data2 using two weights from -1 to 1
 function computeSetChange(all_data, w1, w2) { // data should contain the set and type columns
@@ -571,9 +1116,9 @@ function setup(row_name, sets) {
   width = 1300 - margin.left - margin.right;
   height = 110 - margin.top - margin.bottom;
 
-  var bcolor = "#333";
+  var type = "MOUSE";
   if (row_name.indexOf("HUMAN") != -1) {
-    bcolor = "#444";
+    type = "HUMAN";
   }
 
   data1 = sets[0];
@@ -581,7 +1126,7 @@ function setup(row_name, sets) {
   // append the svg object to the body of the page
   var svg = d3.select("#my_dataviz")
     .append("svg")
-    .attr("class", row_name)
+    .attr("class", row_name + " " + type)
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     //.attr('fill', bcolor)
@@ -664,6 +1209,7 @@ function setup(row_name, sets) {
       a = a.replace("Chemicald", "Chemical d");
       a = a.replace("Otherg", "Other g");
       a = a.replace("linkedg", "linked g");
+      a = a.replace("_", " ");
       return a;
     });
 
@@ -859,6 +1405,7 @@ function displayControlPoints() {
     })
     //.attr("d", function (d) { return "M" + d.join("L") + "Z"; });
     .attr("d", function (point, i) { return line(resampleSegments(voronoi[i])); });
+  //.attr("d", function (point, i) { return line(voronoi[i]); });
 
   svg.selectAll("circle")
     .data(vertices)

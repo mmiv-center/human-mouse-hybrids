@@ -294,9 +294,17 @@ body {
 }
 
 #my_dataviz {
-    height: 450px;
+    height: 440px;
     width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
     background-color: rgba(230, 230, 230, 0.3)
+}
+
+.HUMAN {
+    background-color: "rgba(250,250,250,0.5)";
+}
+
+.MOUSE {
+    background-color: #EEE;
 }
