@@ -2,6 +2,12 @@
 
 Visualizing proteomics data.
 
+![Screenshot of the application interface](images/teaserr.png)
+
+![Explanation on the Voronoi treemap display](images/controls.png)
+
+
+
 ### Build
 
 This project depends on php. Start the single web-application using:
