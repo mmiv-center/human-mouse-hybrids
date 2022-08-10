@@ -2,7 +2,7 @@
 
 Visualizing proteomics data.
 
-![Screenshot of the application interface](images/teaserr.png)
+![Screenshot of the application interface](images/teaser.png)
 
 ![Explanation on the Voronoi treemap display](images/controls.png)
 
