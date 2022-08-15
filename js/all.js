@@ -1045,6 +1045,102 @@ function computeSetChange(all_data, w1, w2) { // data should contain the set and
   return all_data2;
 }
 
+function pad(num, size) {
+  var s = "000000000" + num;
+  return s.substr(s.length - size);
+}
+
+// as a  diversity/singleton measure we can simply count if one modification takes it all
+function diversity(all_data, divers, levels = [0, 5]) { // levels should be odd numbers
+  // we want the index on two levels... for  three proteins
+  divers = {};
+  var prot_mods = Object.keys(all_data);
+  var proteins = {}; // create unique lists
+  var modifications = {};
+  for (var i = 0; i < prot_mods.length; i++) {
+    var s = prot_mods[i].split(" ");
+    var p = s[0].replace("_HUMAN", "").replace("_MOUSE", "");
+    proteins[p] = 1;
+    modifications[s.slice(1).join(" ")] = 1;
+  }
+  proteins = Object.keys(proteins);
+  modifications = Object.keys(modifications);
+  var max_loc = 0;
+
+  for (var i = 0; i < proteins.length; i++) {
+    var protein = proteins[i];
+    var max_per_loc = {};
+    for (var j = 0; j < modifications.length; j++) {
+      var names = [protein + "_HUMAN" + " " + modifications[j], protein + "_MOUSE" + " " + modifications[j]];
+      for (nam in names) {
+        for (loc in all_data[names[nam]]) {
+          if (["set", "type", "index"].indexOf(loc) === -1) {
+            if (parseFloat(loc.replace("loc_", "")) > max_loc) {
+              max_loc = parseFloat(loc.replace("loc_", ""));
+            }
+
+            if (typeof max_per_loc[loc] == 'undefined') {
+              max_per_loc[loc] = { modification: [modifications[j]], value: parseFloat(all_data[names[nam]][loc]) };
+            }
+            if (parseFloat(all_data[names[nam]][loc]) > max_per_loc[loc].value) {
+              max_per_loc[loc] = { modification: [modifications[j]], value: parseFloat(all_data[names[nam]][loc]) };
+            } else if (parseFloat(all_data[names[nam]][loc]) == max_per_loc[loc].value &&
+              max_per_loc[loc].modification.indexOf(modifications[j]) == -1) {
+              max_per_loc[loc].modification.push(modifications[j]);
+            }
+
+          }
+        }
+      }
+    }
+    // now store the winner - if we have a single modification per location
+    divers[protein] = { 0: max_per_loc };
+    for (shift_idx in levels) {
+      var shift = levels[shift_idx];
+      if (shift == 0) {
+        continue;
+      }
+      divers[protein][shift] = {};
+      var shift2 = Math.floor(shift / 2);
+      for (var j = 1; j < max_loc; j++) { // compute shifted mean
+        var winners = {};
+        for (var k = j - shift2; k < j + shift2; k++) {
+          if (k < 1 || k > max_loc - 1) {
+            continue;
+          }
+          var loc = "loc_" + pad(k, 3);
+          if (typeof divers[protein][0][loc] == 'undefined') {
+            continue;
+          }
+          if (divers[protein][0][loc]["modification"].length != 1) {
+            continue;
+          }
+          // we have a single winner at this location
+          if (typeof winners[divers[protein][0][loc]["modification"][0]] == 'undefined') {
+            winners[divers[protein][0][loc]["modification"][0]] = 0;
+          }
+          winners[divers[protein][0][loc]["modification"][0]]++; // count how many times we have that lonely winner
+        }
+        // how do we have a single winner?
+        var max_winner = 0;
+        var num_winners = 0;
+        for (win in winners) {
+          if (typeof winners[max_winner] == "undefined" || winners[win] >= winners[max_winner]) {
+            max_winner = win;
+            num_winners++;
+          }
+        }
+        if (max_winner != 0 && num_winners == 1) {
+          divers[protein][shift]["loc_" + pad(j, 3)] = max_winner;
+        } else {
+          divers[protein][shift]["loc_" + pad(j, 3)] = "";
+        }
+      }
+    }
+  }
+  return divers;
+}
+
 
 var svg;
 var x;
@@ -1054,6 +1150,7 @@ var width = 300;
 var margin = { top: 20, right: 30, bottom: 30, left: 25 };
 
 var all_data = {};
+var divers = {}; // diversity index results
 
 function loadData(callback) {
   var subset = ["ROA1_HUMAN", "ROA1_MOUSE", "TGFB1_HUMAN", "TGFB1_MOUSE", "ALDOA_HUMAN", "ALDOA_MOUSE"];
@@ -1084,9 +1181,51 @@ function loadData(callback) {
     }
 
     callback(row_name, [data1, data2]);
+  }).then(function (data) {
+    divers = diversity(all_data, {}, [0, 9]);
+    // and display
+    displayDiversity(divers);
   });
 }
 
+// show the diversity winner with a small sign above the location
+function displayDiversity(divers) {
+  for (protein in divers) {
+    var dat = divers[protein][0]; // should always exist
+    // first find the svg's for each protein
+    for (loc in dat) {
+      if (dat[loc].modification.length == 1) {
+        var mod = dat[loc].modification[0];
+        var svg = d3.selectAll("#my_dataviz svg[protein='" + protein + "'][modification='" + mod + "']");
+        var rects = svg.select("rect[loc='" + loc + "']");
+        // guess we have some rects now?
+        if (rects.size() > 0) {
+          //console.log(rects.size());
+          rects.each(function (d, b) {
+            // this points to the element itself
+            if (d.value == 0) {
+              return;
+            }
+            var y = parseFloat(d3.select(this).attr("y"));
+            var x = parseFloat(d3.select(this).attr("x"));
+            var bw = parseFloat(d3.select(this).attr("width"));
+            //console.log(JSON.stringify(d) + " " + b + " " + y + " " + x + " " + loc + " " + protein + " " + mod);
+            height = 110 - margin.top - margin.bottom;
+            d3.select(this.parentNode).append("text")
+              .attr("x", x + (bw / 2))
+              .attr("y", (y + 0))
+              .attr("modification", mod)
+              .attr("fill", "#BBB")
+              .attr('text-anchor', 'middle')
+              .attr('font-size', '10px')
+              .text("*");
+          });
+        }
+      }
+    }
+
+  }
+}
 
 // A function that create / update the plot for a given variable:
 function update(data, sanitized_row_name, x, y, dataSetA) {
@@ -1107,11 +1246,12 @@ function update(data, sanitized_row_name, x, y, dataSetA) {
     .attr("height", d => height - y(Math.log(1 + d.value)))
     .attr("fill", "#333")
     .attr('class', 'dynamic')
+    .attr('pointer-events', 'none')
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 }
 
-function setup(row_name, sets) {
+function setup(row_name, sets, identity) {
   // set the dimensions and margins of the graph
   width = 1300 - margin.left - margin.right;
   height = 110 - margin.top - margin.bottom;
@@ -1127,6 +1267,9 @@ function setup(row_name, sets) {
   var svg = d3.select("#my_dataviz")
     .append("svg")
     .attr("class", row_name + " " + type)
+    .attr("modification", identity.modification)
+    .attr("protein", identity.protein)
+    .attr("species", identity.species)
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     //.attr('fill', bcolor)
@@ -1169,12 +1312,14 @@ function setup(row_name, sets) {
 
   // Add Y axis
   var y = d3.scaleLinear()
-    .domain([0, 3.5])
+    .domain([0, 4])
     .range([height, 0])
 
   var axisY = d3.axisLeft(y)
     .tickFormat(function (interval, i) {
-      return (i + 1) % 2 !== 0 ? '' : interval;
+      var inter = parseFloat(interval);
+
+      return (i + 1) % 2 !== 0 ? '' : Math.round(Math.exp(inter) - 1);
     });
   svg.append("g")
     .attr("class", "myYaxis")
@@ -1183,6 +1328,77 @@ function setup(row_name, sets) {
   var u2 = svg.selectAll("rect.static")
     .data(sets[0])
 
+  // Three function that change the tooltip when user hover / move / leave a cell
+  var mouseover = function (d) {
+    jQuery('#tooltip').show();
+    //jQuery('#tooltip').html(d.group + ": " + d.value);
+    d3.select(this)
+      .style("stroke", "orange")
+      .style('stroke-width', '2px')
+      .style("opacity", 1)
+  }
+  var mousemove = function (event, d) {
+    var mx = /*jQuery(this).offset().left + */ event.pageX;  // d3.pointer(event)[0];
+    var my = /*jQuery(this).offset().top + */ event.pageY; // d3.pointer(event)[1];
+    // we need to create the content for the tooltip
+
+    var protein = jQuery(event.currentTarget).parent().parent().attr('protein');
+    var modification = jQuery(event.currentTarget).parent().parent().attr('modification');
+    var species = jQuery(event.currentTarget).parent().parent().attr('species');
+
+    var neighborhood = Object.keys(divers[protein])[1];
+
+    jQuery('#tooltip-title').text(protein + " protein site " + d.group.replace("loc_", ""));
+    //jQuery('#tooltip-location').text(d.group);
+    jQuery('#tooltip-height').text(d.value);
+    jQuery('#tooltip-protein').text(protein);
+    var dom = "";
+    jQuery('#tooltip-dominant').text("");
+    if (divers[protein][0][d.group].modification.length == 1) {
+      if (divers[protein][0][d.group].modification[0] == modification)
+        dom = " (dominant)";
+      else {
+        jQuery('#tooltip-dominant').text("Dominant modification at protein site " + d.group.replace("loc_", "") + " is \"" + divers[protein][0][d.group].modification[0] + "\".");
+      }
+    } else {
+      jQuery('#tooltip-dominant').text("No dominant modification found.");
+    }
+    var newArticle = "A";
+    switch (modification.charAt(0).toLowerCase()) {
+      case 'a':
+      case 'e':
+      case 'i':
+      case 'o':
+      case 'u':
+        newArticle += 'n'; // an
+        break;
+      default:
+        // a
+        break;
+    }
+
+    jQuery('#tooltip-modification').text(newArticle + " \"" + modification + "\" " + dom + " modification.");
+
+    var neighbors = divers[protein][neighborhood][d.group];
+    if (neighbors.length > 0) { // string
+      var also = "";
+      if (neighbors == modification)
+        also = " also ";
+      jQuery('#tooltip-neighbors').text("Neighboring sites are " + also + "dominated by \"" + neighbors + "\" modifications.");
+    }
+
+    jQuery('#tooltip')
+      .css("left", (mx + 10) + "px")
+      .css("top", (my) + "px")
+      .show();
+  }
+  var mouseleave = function (event, d) {
+    jQuery('#tooltip').hide();
+    d3.select(this)
+      .style("stroke", "none")
+      .style("opacity", 0.8)
+  }
+
   // can we have one plot of setA that stays on screen?
   u2
     .join("rect")
@@ -1190,8 +1406,12 @@ function setup(row_name, sets) {
     .attr("x", d => x(d.group))
     .attr("y", d => y(Math.log(1 + d.value)))
     .attr("width", x.bandwidth())
+    .attr("loc", d => d.group)
     .attr("height", d => height - y(Math.log(1 + d.value)))
-    .attr("fill", "#BBB");
+    .attr("fill", "#BBB")
+    .on("mouseover", mouseover)
+    .on("mousemove", mousemove)
+    .on("mouseleave", mouseleave);
   //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   // add a title  
@@ -1476,9 +1696,15 @@ jQuery(document).ready(function () {
     //console.log("setup row_name: " + row_name);
     var sanitized_row_name = row_name.replace(/\s/g, '');
 
+    var identity = {
+      "protein": row_name.split(" ")[0].replace("_HUMAN", "").replace("_MOUSE", ""),
+      "species": row_name.indexOf("_HUMAN") === -1 ? "mouse" : "human",
+      "modification": row_name.split(" ").splice(1).join(" ")
+    }
+
     data1 = sets[0];
     data2 = sets[1];
-    objs = setup(sanitized_row_name, sets);
+    objs = setup(sanitized_row_name, sets, identity);
     x = objs[1];
     y = objs[2];
     //update(data1, sanitized_row_name, x, y);
@@ -1496,5 +1722,5 @@ jQuery(document).ready(function () {
     console.log(w1 + " " + w2);
     all_data2 = computeSetChange(all_data, w1, w2);
   });
-
+  //jQuery('#tooltip').hide();
 });

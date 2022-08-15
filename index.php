@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
 
-    <title>Steerable Mouse-Human Hybrids</title>
+    <title>Mouse-Human Hybrids</title>
 
 <!--    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/cover/"> -->
 
@@ -24,7 +24,7 @@
     <div class="cover-container d-flex h-100 p-10 mx-auto flex-column">
       <header class="masthead">
         <div class="inner">
-          <h3 class="masthead-brand">Steerable Mouse-Human Hybrids</h3>
+          <h3 class="masthead-brand">Mouse-Human Hybrids</h3>
           <nav class="nav nav-masthead justify-content-center">
             <!-- <a class="nav-link active" href="#">Home</a>
             <a class="nav-link" href="#">Features</a>
@@ -62,6 +62,24 @@
       </footer> -->
     </div>
 
+    <div id="tooltip" style="display: none; position: absolute; width: 250px; min-height: 60px; border: 1px solid gray; border-radius: 2px; background-color: white; fill: gray;">
+      <div id="tooltip-content" style="overflow-y: scroll; padding-left: 5px; z-index: 1; height: 100%; padding-right: 5px; position: relative;">
+        <div id="tooltip-title"></div>
+        <div style="position: absolute; right: 5px; top: 2px; z-index: 0; font-size: 10px; vertical-align: middle; height: 15px; width: 50px; background-color: orange; border-radius: 2px; color: white;">
+        count&nbsp; 
+          <span id="tooltip-height"></span>
+        </div>
+        <div class="tooltip-line">  
+          <div id="tooltip-modification"></div>
+        </div>
+        <div class="tooltip-line"><p>
+          <span id="tooltip-dominant"></span>
+          <span id="tooltip-neighbors"></span></p>
+        </div>
+        <div class="tooltip-line">
+        </div>
+      </div>
+    </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
