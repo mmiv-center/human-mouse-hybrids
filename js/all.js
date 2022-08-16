@@ -1419,7 +1419,7 @@ function setup(row_name, sets, identity) {
     jQuery('#tooltip-dominant').text("");
     if (divers[protein][0][d.group].modification.length == 1) {
       if (divers[protein][0][d.group].modification[0] == modification)
-        dom = " (dominant)";
+        dom = " (\u2655-dominant)";
       else {
         jQuery('#tooltip-dominant').text("Dominant modification at protein site " + d.group.replace("loc_", "") + " is \"" + divers[protein][0][d.group].modification[0] + "\".");
       }
@@ -1715,7 +1715,7 @@ function displayControlPoints() {
     })
     .on('click', function (d, i) {
       // we selected this section
-      console.log("we click on section!");
+      //console.log("we click on section!");
       d3.select(this.parentNode).selectAll("path")
         .attr("filter", "")
         .lower();
@@ -1789,8 +1789,8 @@ var all_data2 = {};
 
 jQuery(document).ready(function () {
 
-  distributeControlPointsSquare();
-  //distributeControlPoints();
+  //distributeControlPointsSquare();
+  distributeControlPoints();
   // display control point influence voronoi cells
   displayControlPoints();
 
