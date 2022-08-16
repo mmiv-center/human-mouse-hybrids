@@ -19,6 +19,69 @@ function objectMap(object, mapFn) {
   }, {})
 }
 
+function distributeControlPointsSquare() {
+  // instead a circle configuration do a square one
+  var radius = 0.65;
+  var circles = [];
+  var circle_lengths = {};
+  var scale = 1;
+  for (var i = 0; i < set_variations.length; i++) {
+    if (circles.indexOf(set_variations[i].c.circle) == -1) {
+      circles.push(set_variations[i].c.circle);
+      circle_lengths[set_variations[i].c.circle] = 0;
+    }
+    circle_lengths[set_variations[i].c.circle]++;
+  }
+  var circle_lengths_keys = Object.keys(circle_lengths);
+  for (var i = 1; i < circle_lengths_keys.length; i++) {
+    circle_lengths[circle_lengths_keys[i]]++;
+  }
+  var w = 2;
+  var h = 2; // aspect ratio is important
+  var aspect_ratio = w / h;
+
+  function sizes(w, h, n) {
+    nx = Math.sqrt((w / h) * n + ((w - h) * (w - h) / (4 * h * h))) - ((w - h) / (2 * h))
+    ny = n / nx;
+    return [Math.ceil(nx), Math.ceil(ny)];
+  }
+  var s = [1, 1];
+  for (var c = 0; c < circles.length; c++) {
+    var circle = circles[c];
+    if (c == 1) {
+      scale *= 0.5 * w / s[0];
+    }
+    // distribute the control points in a square
+    var cx = set_variations[circle].c.x;
+    var cy = set_variations[circle].c.y;
+    s = sizes(w, h, circle_lengths[circle]);
+    // but we need to change the circle coordinates as well now
+    var ci = 0;
+    var di = scale * (0.5 * w / s[0]);
+    var x = (ci % s[0]) * w / s[0];
+    var y = Math.floor(ci / s[0]) * h / s[1];
+    set_variations[circle].c.x = (di + cx + scale * (x)) - (w / 2);
+    set_variations[circle].c.y = (di + cy + scale * (y)) - (h / 2);
+
+    ci++;
+    for (var i = 0; i < set_variations.length; i++) {
+      if (set_variations[i].c.circle != circle) {
+        continue;
+      }
+      var di = scale * (0.5 * w / s[0]);
+      var x = (ci % s[0]) * w / s[0];
+      var y = Math.floor(ci / s[0]) * h / s[1];
+      set_variations[i].c = {
+        x: (di + cx + scale * (x)) - (w / 2),
+        y: (di + cy + scale * (y)) - (h / 2),
+        circle: set_variations[i].c.circle,
+        weight: set_variations[i].c.weight
+      };
+      ci++;
+    }
+  }
+}
+
 // assume that we have a varying number of set variations and
 // distribute them in a circle (c-coordinates)
 function distributeControlPoints() { // start with circle 0
@@ -1213,12 +1276,12 @@ function displayDiversity(divers) {
             height = 110 - margin.top - margin.bottom;
             d3.select(this.parentNode).append("text")
               .attr("x", x + (bw / 2))
-              .attr("y", (y + 0))
+              .attr("y", (y - 1))
               .attr("modification", mod)
               .attr("fill", "#BBB")
               .attr('text-anchor', 'middle')
-              .attr('font-size', '10px')
-              .text("*");
+              .attr('font-size', '8px')
+              .text("\u2655"); // white queen
           });
         }
       }
@@ -1382,7 +1445,7 @@ function setup(row_name, sets, identity) {
     var neighbors = divers[protein][neighborhood][d.group];
     if (neighbors.length > 0) { // string
       var also = "";
-      if (neighbors == modification)
+      if (neighbors == modification && divers[protein][0][d.group].modification.length == 1)
         also = " also ";
       jQuery('#tooltip-neighbors').text("Neighboring sites are " + also + "dominated by \"" + neighbors + "\" modifications.");
     }
@@ -1582,6 +1645,33 @@ function displayControlPoints() {
 
   var voronoi = weightedVoronoi(vertices);                        // compute the weighted Voronoi tessellation
 
+  // Highlight a zone
+  /* For the drop shadow filter... */
+  var defs = svg.append("defs");
+
+  var filter = defs.append("filter")
+    .attr("id", "dropshadow")
+
+  filter.append("feGaussianBlur")
+    .attr("in", "SourceAlpha")
+    .attr("in2", "SourceAlpha")
+    .attr("stdDeviation", 2)
+    .attr("result", "blur");
+  filter.append("feOffset")
+    .attr("in", "blur")
+    //.attr("in2", "blur")
+    .attr("dx", 0)
+    .attr("dy", 0)
+    .attr("result", "offsetBlur");
+
+  var feMerge = filter.append("feMerge");
+
+  feMerge.append("feMergeNode")
+    .attr("in", "offsetBlur")
+  feMerge.append("feMergeNode")
+    .attr("in", "SourceGraphic");
+  // end FILTER highlight a zone
+
   svg.selectAll("path")
     .data(voronoi)
     .enter().append("svg:path")
@@ -1622,6 +1712,16 @@ function displayControlPoints() {
       d3.select(this).transition()
         .duration('50')
         .attr('opacity', '1');
+    })
+    .on('click', function (d, i) {
+      // we selected this section
+      console.log("we click on section!");
+      d3.select(this.parentNode).selectAll("path")
+        .attr("filter", "")
+        .lower();
+      d3.select(this)
+        .attr("filter", "url(#dropshadow)")
+        .raise();
     })
     //.attr("d", function (d) { return "M" + d.join("L") + "Z"; });
     .attr("d", function (point, i) { return line(resampleSegments(voronoi[i])); });
@@ -1688,7 +1788,9 @@ function displayControlPoints() {
 var all_data2 = {};
 
 jQuery(document).ready(function () {
-  distributeControlPoints();
+
+  distributeControlPointsSquare();
+  //distributeControlPoints();
   // display control point influence voronoi cells
   displayControlPoints();
 
