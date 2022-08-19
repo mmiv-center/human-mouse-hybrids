@@ -11,6 +11,9 @@ var data2 = [
   { group: "C", value: 20 }
 ];
 
+var timing = { up: 500, wait: 600 };
+//var timing = { up: 30, wait: 100 };
+
 // in order to iterate through a (flat) object and change all the values 
 function objectMap(object, mapFn) {
   return Object.keys(object).reduce(function (result, key) {
@@ -770,7 +773,7 @@ var demo_max = [
     idx: 11,
     c: { x: -1, y: 0, circle: 0, weight: 300 },
     description: "Highlight what is in this set",
-    descLong: "The marginal distribution of modification values for a given protein and modification type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+    descLong: "The marginal distribution of modification values for a given protein and modification type is described by quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
   },
   /*  {
       name: "min-q1",
@@ -778,7 +781,7 @@ var demo_max = [
       idx: 12,
       c: { x: 0, y: -1, circle: 11, weight: 0 },
       description: "Highlight all values that are between the minimum and q1",
-      descLong: "The marginal distribution of modification values for a given protein and modification type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+      descLong: "The marginal distribution of modification values for a given protein and modification type is described by quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
     },
     {
       name: "q1-q2",
@@ -786,7 +789,7 @@ var demo_max = [
       idx: 13,
       c: { x: 0, y: -1, circle: 11, weight: 0 },
       description: "Highlight all values that are between q1 and q2",
-      descLong: "The marginal distribution of modification values for a given protein and modification type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+      descLong: "The marginal distribution of modification values for a given protein and modification type is described by quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
     }, */
   {
     name: "q1-q3",
@@ -794,7 +797,7 @@ var demo_max = [
     idx: 12,
     c: { x: 0, y: -1, circle: 11, weight: 100 },
     description: "Highlight values in the middle (between q1 and q3)",
-    descLong: "The marginal distribution of modification values for a given protein and modification type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+    descLong: "The marginal distribution of modification values for a given protein and modification type is described by quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
   },
   /*  {
       name: "q2-q3",
@@ -802,7 +805,7 @@ var demo_max = [
       idx: 15,
       c: { x: 0, y: -1, circle: 11, weight: 0 },
       description: "Highlight all values that are between q2 and q3",
-      descLong: "The marginal distribution of modification values for a given protein and modification type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+      descLong: "The marginal distribution of modification values for a given protein and modification type is described by quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
     },
   {
     name: "q3-max",
@@ -810,7 +813,7 @@ var demo_max = [
     idx: 16,
     c: { x: 0, y: -1, circle: 11, weight: 0 },
     description: "Highlight all values that are between q3 and the maximum value",
-    descLong: "The marginal distribution of modification values for a given protein and modification type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+    descLong: "The marginal distribution of modification values for a given protein and modification type is described by quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
   }, */
   {
     name: "extremes",
@@ -818,7 +821,7 @@ var demo_max = [
     idx: 13,
     c: { x: 0, y: -1, circle: 11, weight: 0 },
     description: "Highlight all extreme values, values that are below q1 or above q3",
-    descLong: "The marginal distribution of modification values for a given protein and modification type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+    descLong: "The marginal distribution of modification values for a given protein and modification type is described by quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
   },
 ];
 
@@ -1336,8 +1339,13 @@ function update(data, sanitized_row_name, x, y, dataSetA) {
   //margin = { top: 10, right: 10, bottom: 50, left: 30 };
   u
     .join("rect")
+    .filter(function (d) {
+      if (self.y != y(Math.log(1 + d.value)))
+        return true;
+      return false;
+    })
     .transition()
-    .duration(500)
+    .duration(timing.up)
     .attr("x", d => x(d.group))
     .attr("y", d => y(Math.log(1 + d.value)))
     .attr("width", x.bandwidth())
@@ -1563,7 +1571,7 @@ function toggleSets(sets, si, sanitized_row_name, x, y) {
   update(sets[si], sanitized_row_name, x, y, sets[0]);
   setTimeout(function () {
     toggleSets(sets, si, sanitized_row_name, x, y);
-  }, 600);
+  }, timing.wait);
 }
 
 function getTypePerCircle(set_variations) {

@@ -75,7 +75,7 @@ body {
  * Header
  */
 .masthead {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     padding-top: 1rem;
 }
 
@@ -330,7 +330,7 @@ body {
 }
 
 #my_dataviz {
-    height: 440px;
+    height: 550px;
     width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
