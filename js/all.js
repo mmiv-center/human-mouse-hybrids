@@ -85,7 +85,9 @@ function distributeControlPointsSquare() {
 // assume that we have a varying number of set variations and
 // distribute them in a circle (c-coordinates)
 function distributeControlPoints() { // start with circle 0
-  var radius = 0.65;
+  //var aspect_ratio = 1.5;
+
+  var radius = 0.618;
   var circles = [];
   var circle_lengths = {};
   for (var i = 0; i < set_variations.length; i++) {
@@ -707,7 +709,7 @@ var demo_max = [
     idx: 3,
     c: { x: 0, y: -1, circle: 0, weight: 0 },
     description: "Highlight all values at the slowest repeating frequency.",
-    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
+    descLong: "Characteristic frequencies are computed by treating the modification locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and modification type."
   },
   {
     name: "frequency peak 02",
@@ -715,7 +717,7 @@ var demo_max = [
     idx: 4,
     c: { x: 0, y: -1, circle: 3, weight: 0 },
     description: "Highlight all values at the second slowest repeating frequency.",
-    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
+    descLong: "Characteristic frequencies are computed by treating the modification locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and modification type."
   },
   {
     name: "frequency peak 03",
@@ -723,7 +725,7 @@ var demo_max = [
     idx: 5,
     c: { x: 0, y: -1, circle: 3, weight: 0 },
     description: "Highlight all values at the third characteristic frequency.",
-    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
+    descLong: "Characteristic frequencies are computed by treating the modification locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and modification type."
   },
   {
     name: "frequency peak 04",
@@ -731,7 +733,7 @@ var demo_max = [
     idx: 6,
     c: { x: 0, y: -1, circle: 3, weight: 0 },
     description: "Highlight all values at the fourth repeating frequency.",
-    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
+    descLong: "Characteristic frequencies are computed by treating the modification locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and modification type."
   },
   {
     name: "frequency peak 05",
@@ -739,7 +741,7 @@ var demo_max = [
     idx: 7,
     c: { x: 0, y: -1, circle: 3, weight: 0 },
     description: "Highlight all values at the fifth (fastest) repeating frequency.",
-    descLong: "Characteristic frequencies are computed by treating the mutation locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and mutation type."
+    descLong: "Characteristic frequencies are computed by treating the modification locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and modification type."
   },
   {
     name: "difference",
@@ -768,7 +770,7 @@ var demo_max = [
     idx: 11,
     c: { x: -1, y: 0, circle: 0, weight: 300 },
     description: "Highlight what is in this set",
-    descLong: "The marginal distribution of mutation values for a given protein and mutation type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+    descLong: "The marginal distribution of modification values for a given protein and modification type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
   },
   /*  {
       name: "min-q1",
@@ -776,7 +778,7 @@ var demo_max = [
       idx: 12,
       c: { x: 0, y: -1, circle: 11, weight: 0 },
       description: "Highlight all values that are between the minimum and q1",
-      descLong: "The marginal distribution of mutation values for a given protein and mutation type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+      descLong: "The marginal distribution of modification values for a given protein and modification type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
     },
     {
       name: "q1-q2",
@@ -784,7 +786,7 @@ var demo_max = [
       idx: 13,
       c: { x: 0, y: -1, circle: 11, weight: 0 },
       description: "Highlight all values that are between q1 and q2",
-      descLong: "The marginal distribution of mutation values for a given protein and mutation type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+      descLong: "The marginal distribution of modification values for a given protein and modification type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
     }, */
   {
     name: "q1-q3",
@@ -792,7 +794,7 @@ var demo_max = [
     idx: 12,
     c: { x: 0, y: -1, circle: 11, weight: 100 },
     description: "Highlight values in the middle (between q1 and q3)",
-    descLong: "The marginal distribution of mutation values for a given protein and mutation type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+    descLong: "The marginal distribution of modification values for a given protein and modification type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
   },
   /*  {
       name: "q2-q3",
@@ -800,7 +802,7 @@ var demo_max = [
       idx: 15,
       c: { x: 0, y: -1, circle: 11, weight: 0 },
       description: "Highlight all values that are between q2 and q3",
-      descLong: "The marginal distribution of mutation values for a given protein and mutation type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+      descLong: "The marginal distribution of modification values for a given protein and modification type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
     },
   {
     name: "q3-max",
@@ -808,7 +810,7 @@ var demo_max = [
     idx: 16,
     c: { x: 0, y: -1, circle: 11, weight: 0 },
     description: "Highlight all values that are between q3 and the maximum value",
-    descLong: "The marginal distribution of mutation values for a given protein and mutation type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+    descLong: "The marginal distribution of modification values for a given protein and modification type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
   }, */
   {
     name: "extremes",
@@ -816,7 +818,7 @@ var demo_max = [
     idx: 13,
     c: { x: 0, y: -1, circle: 11, weight: 0 },
     description: "Highlight all extreme values, values that are below q1 or above q3",
-    descLong: "The marginal distribution of mutation values for a given protein and mutation type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+    descLong: "The marginal distribution of modification values for a given protein and modification type is described based on their quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
   },
 ];
 
@@ -1611,6 +1613,9 @@ function displayControlPoints() {
       .attr("d", function (d) { return d; });
   }
 
+  // if we have already some control objects we need to remove them (resize event)
+  jQuery('#control').children().remove();
+
   var svg = d3.select("#control")
     .append("svg:svg")
     .attr("width", w)
@@ -1668,7 +1673,7 @@ function displayControlPoints() {
     return points2;
   }
 
-  // we  should make the bounds smaller by the margin we need for display of the lines
+  // we should make the bounds slightly smaller for display of the lines and the shadow
   var lmargin = 5;
   var bounds = d3.geom.polygon([
     [0 + lmargin, 0 + lmargin],
@@ -1711,7 +1716,7 @@ function displayControlPoints() {
 
   filter.append("feGaussianBlur")
     .attr("in", "SourceAlpha")
-    .attr("in2", "SourceAlpha")
+    //.attr("in2", "SourceAlpha")
     .attr("stdDeviation", 2)
     .attr("result", "blur");
   filter.append("feOffset")
@@ -1803,47 +1808,12 @@ function displayControlPoints() {
     .attr("cx", 100)
     .attr("cy", 100);
 
-
-  //  https://bl.ocks.org/mbostock/4636377
-  /*  var path22 = svg.selectAll("path")
-      .data(vertices)
-      .enter().append("path");
-    var bounds = d3.geom.polygon([
-      [0, 0],
-      [0, 200],
-      [200, 200],
-      [200, -200]
-    ]);
-    var line = d3.line()
-      .curve(d3.curveCatmullRomOpen)
-    // .interpolate("basis-closed");
-  
-    function resample(points) {
-      if (points.length == 0)
-        return points;
-      var i = -1,
-        n = points.length,
-        p0 = points[n - 1], x0 = p0[0], y0 = p0[1], p1, x1, y1,
-        points2 = [];
-      while (++i < n) {
-        p1 = points[i], x1 = p1[0], y1 = p1[1];
-        points2.push(
-          [(x0 * 2 + x1) / 3, (y0 * 2 + y1) / 3],
-          [(x0 + x1 * 2) / 3, (y0 + y1 * 2) / 3],
-          p1
-        );
-        p0 = p1, x0 = x1, y0 = y1;
-      }
-      return points2;
-    }
-    var voronoi = d3.geom.voronoi(vertices).map(function (cell) { return bounds.clip(cell); });
-    path22.attr("d", function (point, i) { return line(resample(voronoi[i])); });
-  */
-
-
-
 }
 
+jQuery(window).resize(function () {
+  console.log('resize');
+  displayControlPoints();
+});
 
 var all_data2 = {};
 
@@ -1852,7 +1822,9 @@ jQuery(document).ready(function () {
   //distributeControlPointsSquare();
   distributeControlPoints();
   // display control point influence voronoi cells
-  displayControlPoints();
+  setTimeout(function () {
+    displayControlPoints();
+  }, 100);
 
   loadData(function (row_name, sets) {
     //console.log("setup row_name: " + row_name);
@@ -1885,4 +1857,5 @@ jQuery(document).ready(function () {
     all_data2 = computeSetChange(all_data, w1, w2);
   });
   //jQuery('#tooltip').hide();
+
 });
