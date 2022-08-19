@@ -864,55 +864,6 @@ function computeSetChange(all_data, w1, w2) { // data should contain the set and
       setB[key] = parseFloat(setB[key]);
     }
 
-    // now we have setA and setB and can compute the set variations based on w1 and w2
-    var intersection = {}; // if both have the same value
-    for (var key in setA) {
-      if (key == "set" || key == "type" || key == "index") {
-        intersection[key] = setA[key];
-      } else {
-        intersection[key] = (setA[key] == setB[key]) ? setA[key] : 0;
-      }
-    }
-    var difference = {}; // the values they don't share
-    for (var key in setA) {
-      if (key == "set" || key == "type" || key == "index") {
-        difference[key] = setA[key];
-      } else {
-        difference[key] = (setA[key] != setB[key]) ? setA[key] : 0;
-      }
-    }
-    var union = {};
-    for (var key in setA) {
-      if (key == "set" || key == "type" || key == "index") {
-        union[key] = setA[key];
-      } else {
-        union[key] = (setA[key] > 0) ? setA[key] : (setB[key] > 0 ? setB[key] : 0);
-      }
-    }
-    var jaccard = {};
-    for (var key in setA) {
-      if (key == "set" || key == "type" || key == "index") {
-        jaccard[key] = setA[key];
-      } else {
-        jaccard[key] = Math.abs(10 * (((setA[key] + setB[key]) > 0) ? (setA[key] - setB[key]) / (setA[key] + setB[key]) : 0));
-      }
-    }
-
-    // weight 1
-    // Values in setA not in setB ... values in both setA and setB ... values only in setB
-
-    // Jacqcard index: area of intersection / area of union - but this is a single values for each full set
-    // we can coompute this for bags of hieght values
-
-    // ok, so there are lots of measures and each might change the display relative to the center (setA)
-    // we can dial in which one of them - matches with "steerable" like in a wheel
-    // if we put setA into the middle it also makes sense
-    // we should use the voronoid cells and color them by how much change (entropy?) we each produce
-    // we should also write a sentence for each of the variations
-    // make the heartbeat faster and peak at the outside (faster) remain more on the inside (setA)
-
-    // we should compute the weighted average by the distance of the middle to each of the sets
-
     function idx4(str) {
       // return the index of the given name in set_variations
       for (var i = 0; i < set_variations.length; i++) {
@@ -923,143 +874,218 @@ function computeSetChange(all_data, w1, w2) { // data should contain the set and
       return -1;
     }
 
-    // compute the set variations for the setA and setB objects, re-use the coordinates and descriptions
-    set_variations[idx4("setA")].set = setA;
-    set_variations[idx4("setB")].set = setB;
-    set_variations[idx4("intersection")].set = intersection;
-    set_variations[idx4("difference")].set = difference;
-    set_variations[idx4("union")].set = union;
-    set_variations[idx4("Jaccard")].set = jaccard;
-    set_variations[idx4("0")].set = objectMap(setA, function (a) { return 0.0; });
-    // here an analysis of moments would be nice as well
+    // only compute the set_variations if they don't exist already, 
+    // lets look at a single one and see if its 'set' has any keys
+    if (true) { // Object.keys(set_variations[idx4("setA")].set).length == 0) {
 
-    // lets compute the marginal histogram and do the quartiles (just checking what this looks like)
-    function quartiles(data) {
-      var data_sorted = data.slice().sort(function (a, b) { return a - b; });
-      var q1 = data_sorted[Math.floor(data_sorted.length / 4)];
-      var q2 = data_sorted[Math.floor(data_sorted.length / 2)];
-      var q3 = data_sorted[Math.floor(3 * data_sorted.length / 4)];
-      return { min: data_sorted[0], q1: q1, q2: q2, q3: q3, max: data_sorted[data_sorted.length - 1] };
-    }
-    var d = [];
-    for (var key in setA) {
-      if (key == "set" || key == "type" || key == "index" || setA[key] == 0) {
-        continue;
+      // now we have setA and setB and can compute the set variations based on w1 and w2
+      var intersection = {}; // if both have the same value
+      for (var key in setA) {
+        if (key == "set" || key == "type" || key == "index") {
+          intersection[key] = setA[key];
+        } else {
+          intersection[key] = (setA[key] == setB[key]) ? setA[key] : 0;
+        }
       }
-      d.push(setA[key]);
-    }
-    var q = quartiles(d);
+      var difference = {}; // the values they don't share
+      for (var key in setA) {
+        if (key == "set" || key == "type" || key == "index") {
+          difference[key] = setA[key];
+        } else {
+          difference[key] = (setA[key] != setB[key]) ? setA[key] : 0;
+        }
+      }
+      var union = {};
+      for (var key in setA) {
+        if (key == "set" || key == "type" || key == "index") {
+          union[key] = setA[key];
+        } else {
+          union[key] = (setA[key] > 0) ? setA[key] : (setB[key] > 0 ? setB[key] : 0);
+        }
+      }
+      var jaccard = {};
+      for (var key in setA) {
+        if (key == "set" || key == "type" || key == "index") {
+          jaccard[key] = setA[key];
+        } else {
+          jaccard[key] = Math.abs(10 * (((setA[key] + setB[key]) > 0) ? (setA[key] - setB[key]) / (setA[key] + setB[key]) : 0));
+        }
+      }
 
-    //set_variations[idx4("min-q1")].set = objectMap(setA, function (a) { if (a > 0 && a < q.q1) return q.q3; else return a; });
-    //set_variations[idx4("q1-q2")].set = objectMap(setA, function (a) { if (a > 0 && a >= q.q1 && a < q.q2) return q.min; else return a; });
-    set_variations[idx4("q1-q3")].set = objectMap(setA, function (a) { if (a > 0 && a >= q.q1 && a <= q.q3) return 0.0; else return a; });
-    //set_variations[idx4("q2-q3")].set = objectMap(setA, function (a) { if (a > 0 && a >= q.q2 && a <= q.q3) return q.min; else return a; });
-    //set_variations[idx4("q3-max")].set = objectMap(setA, function (a) { if (a > 0 && a > q.q3) return q.min; else return a; });
-    set_variations[idx4("extremes")].set = objectMap(setA, function (a) {
-      if (a > 0 && (a < q.q1 || a > q.q3)) {
-        if (a < a.q1)
+      // weight 1
+      // Values in setA not in setB ... values in both setA and setB ... values only in setB
+
+      // Jacqcard index: area of intersection / area of union - but this is a single values for each full set
+      // we can coompute this for bags of hieght values
+
+      // ok, so there are lots of measures and each might change the display relative to the center (setA)
+      // we can dial in which one of them - matches with "steerable" like in a wheel
+      // if we put setA into the middle it also makes sense
+      // we should use the voronoid cells and color them by how much change (entropy?) we each produce
+      // we should also write a sentence for each of the variations
+      // make the heartbeat faster and peak at the outside (faster) remain more on the inside (setA)
+
+      // we should compute the weighted average by the distance of the middle to each of the sets
+
+      // compute the set variations for the setA and setB objects, re-use the coordinates and descriptions
+      set_variations[idx4("setA")].set = setA;
+      set_variations[idx4("setB")].set = setB;
+      set_variations[idx4("intersection")].set = intersection;
+      set_variations[idx4("difference")].set = difference;
+      set_variations[idx4("union")].set = union;
+      set_variations[idx4("Jaccard")].set = jaccard;
+      set_variations[idx4("0")].set = objectMap(setA, function (a) { return 0.0; });
+      // here an analysis of moments would be nice as well
+
+      // lets compute the marginal histogram and do the quartiles (just checking what this looks like)
+      function quartiles(data) {
+        var data_sorted = data.slice().sort(function (a, b) { return a - b; });
+        var q1 = data_sorted[Math.floor(data_sorted.length / 4)];
+        var q2 = data_sorted[Math.floor(data_sorted.length / 2)];
+        var q3 = data_sorted[Math.floor(3 * data_sorted.length / 4)];
+        return { min: data_sorted[0], q1: q1, q2: q2, q3: q3, max: data_sorted[data_sorted.length - 1] };
+      }
+      var d = [];
+      for (var key in setA) {
+        if (key == "set" || key == "type" || key == "index" || setA[key] == 0) {
+          continue;
+        }
+        d.push(setA[key]);
+      }
+      var q = quartiles(d);
+
+      //set_variations[idx4("min-q1")].set = objectMap(setA, function (a) { if (a > 0 && a < q.q1) return q.q3; else return a; });
+      //set_variations[idx4("q1-q2")].set = objectMap(setA, function (a) { if (a > 0 && a >= q.q1 && a < q.q2) return q.min; else return a; });
+      set_variations[idx4("q1-q3")].set = objectMap(setA, function (a) { if (a > 0 && a >= q.q1 && a <= q.q3) return 0.0; else return a; });
+      //set_variations[idx4("q2-q3")].set = objectMap(setA, function (a) { if (a > 0 && a >= q.q2 && a <= q.q3) return q.min; else return a; });
+      //set_variations[idx4("q3-max")].set = objectMap(setA, function (a) { if (a > 0 && a > q.q3) return q.min; else return a; });
+      set_variations[idx4("extremes")].set = objectMap(setA, function (a) {
+        if (a > 0 && (a < q.q1 || a > q.q3)) {
+          if (a < a.q1)
+            return q.min;
           return q.min;
-        return q.min;
-      } else return a;
-    });
-
-    // frequency analysis of setA, make a copy of d
-    const freqData = new ComplexArray(512).map((value, i, n) => {
-      if (i > d.length - 1)
-        value.real = 0;
-      else
-        value.real = d[i];
-    });
-
-    var frequencies = freqData.FFT();
-    // ok, now what is a peak in the frequency spectrum?
-    var targets = peakDetect(frequencies);
-    if (targets.length > 0) {
-      var j = 0;
-      // assume that the locations are sorted
-      set_variations[idx4("frequency peak 01")].set = objectMap(setA, function (a, key) {
-        if (key == "set" || key == "type" || key == "index" || setA[key] == 0) {
-          return a;
-        }
-        if (j < targets[0].real.length) {
-          j = j + 1;
-          return a * Math.abs(targets[0].real[j - 1]); // scale a by the waveform (treat negative as positive)
-        } else {
-          j = j + 1;
-          return a;
-        }
+        } else return a;
       });
-    }
 
-    if (targets.length > 1) {
-      var j = 0;
-      // assume that the locations are sorted
-      set_variations[idx4("frequency peak 02")].set = objectMap(setA, function (a, key) {
-        if (key == "set" || key == "type" || key == "index" || setA[key] == 0) {
-          return a;
-        }
-        if (j < targets[1].real.length) {
-          j = j + 1;
-          return a * Math.abs(targets[1].real[j - 1]); // scale a by the waveform (treat negative as positive)
-        } else {
-          j = j + 1;
-          return a;
-        }
+      // frequency analysis of setA, make a copy of d
+      const freqData = new ComplexArray(512).map((value, i, n) => {
+        if (i > d.length - 1)
+          value.real = 0;
+        else
+          value.real = d[i];
       });
+
+      var frequencies = freqData.FFT();
+      // ok, now what is a peak in the frequency spectrum?
+      var targets = peakDetect(frequencies);
+      if (targets.length > 0) {
+        var j = 0;
+        // assume that the locations are sorted
+        set_variations[idx4("frequency peak 01")].set = objectMap(setA, function (a, key) {
+          if (key == "set" || key == "type" || key == "index" || setA[key] == 0) {
+            return a;
+          }
+          if (j < targets[0].real.length) {
+            j = j + 1;
+            return a * Math.abs(targets[0].real[j - 1]); // scale a by the waveform (treat negative as positive)
+          } else {
+            j = j + 1;
+            return a;
+          }
+        });
+      } else { // default if we don't have a peak frequency
+        set_variations[idx4("frequency peak 01")].set = objectMap(setA, function (a, key) {
+          return a;
+        });
+      }
+
+      if (targets.length > 1) {
+        var j = 0;
+        // assume that the locations are sorted
+        set_variations[idx4("frequency peak 02")].set = objectMap(setA, function (a, key) {
+          if (key == "set" || key == "type" || key == "index" || setA[key] == 0) {
+            return a;
+          }
+          if (j < targets[1].real.length) {
+            j = j + 1;
+            return a * Math.abs(targets[1].real[j - 1]); // scale a by the waveform (treat negative as positive)
+          } else {
+            j = j + 1;
+            return a;
+          }
+        });
+      } else { // default if we don't have a peak frequency
+        set_variations[idx4("frequency peak 02")].set = objectMap(setA, function (a, key) {
+          return a;
+        });
+      }
+
+      if (targets.length > 2) {
+        var j = 0;
+        // assume that the locations are sorted
+        set_variations[idx4("frequency peak 03")].set = objectMap(setA, function (a, key) {
+          if (key == "set" || key == "type" || key == "index" || setA[key] == 0) {
+            return a;
+          }
+          if (j < targets[2].real.length) {
+            j = j + 1;
+            return a * Math.abs(targets[2].real[j - 1]); // scale a by the waveform (treat negative as positive)
+          } else {
+            j = j + 1;
+            return a;
+          }
+        });
+      } else { // default if we don't have a peak frequency
+        set_variations[idx4("frequency peak 03")].set = objectMap(setA, function (a, key) {
+          return a;
+        });
+      }
+
+      if (targets.length > 3) {
+        var j = 0;
+        // assume that the locations are sorted
+        set_variations[idx4("frequency peak 04")].set = objectMap(setA, function (a, key) {
+          if (key == "set" || key == "type" || key == "index" || setA[key] == 0) {
+            return a;
+          }
+          if (j < targets[3].real.length) {
+            j = j + 1;
+            return a * Math.abs(targets[3].real[j - 1]); // scale a by the waveform (treat negative as positive)
+          } else {
+            j = j + 1;
+            return a;
+          }
+        });
+      } else { // default if we don't have a peak frequency
+        set_variations[idx4("frequency peak 04")].set = objectMap(setA, function (a, key) {
+          return a;
+        });
+      }
+
+      if (targets.length > 4) {
+        var j = 0;
+        // assume that the locations are sorted
+        set_variations[idx4("frequency peak 05")].set = objectMap(setA, function (a, key) {
+          if (key == "set" || key == "type" || key == "index" || setA[key] == 0) {
+            return a;
+          }
+          if (j < targets[4].real.length) {
+            j = j + 1;
+            return a * Math.abs(targets[4].real[j - 1]); // scale a by the waveform (treat negative as positive)
+          } else {
+            j = j + 1;
+            return a;
+          }
+        });
+      } else { // default if we don't have a peak frequency
+        set_variations[idx4("frequency peak 05")].set = objectMap(setA, function (a, key) {
+          return a;
+        });
+      }
+
+      // and here  we are done with calculation all of the set_variations, we need this only once...
+      // no we do need this every time.. why?
     }
-
-    if (targets.length > 2) {
-      var j = 0;
-      // assume that the locations are sorted
-      set_variations[idx4("frequency peak 03")].set = objectMap(setA, function (a, key) {
-        if (key == "set" || key == "type" || key == "index" || setA[key] == 0) {
-          return a;
-        }
-        if (j < targets[2].real.length) {
-          j = j + 1;
-          return a * Math.abs(targets[2].real[j - 1]); // scale a by the waveform (treat negative as positive)
-        } else {
-          j = j + 1;
-          return a;
-        }
-      });
-    }
-
-    if (targets.length > 3) {
-      var j = 0;
-      // assume that the locations are sorted
-      set_variations[idx4("frequency peak 04")].set = objectMap(setA, function (a, key) {
-        if (key == "set" || key == "type" || key == "index" || setA[key] == 0) {
-          return a;
-        }
-        if (j < targets[3].real.length) {
-          j = j + 1;
-          return a * Math.abs(targets[3].real[j - 1]); // scale a by the waveform (treat negative as positive)
-        } else {
-          j = j + 1;
-          return a;
-        }
-      });
-    }
-
-    if (targets.length > 4) {
-      var j = 0;
-      // assume that the locations are sorted
-      set_variations[idx4("frequency peak 05")].set = objectMap(setA, function (a, key) {
-        if (key == "set" || key == "type" || key == "index" || setA[key] == 0) {
-          return a;
-        }
-        if (j < targets[4].real.length) {
-          j = j + 1;
-          return a * Math.abs(targets[4].real[j - 1]); // scale a by the waveform (treat negative as positive)
-        } else {
-          j = j + 1;
-          return a;
-        }
-      });
-    }
-
-
     // assume that w1 and w2 are between -1 and 1
     var distances = []; // the distance in the control space between (w1, w2) and each set_variations c-coordinate
     var sum_distances = 0;
@@ -1087,7 +1113,7 @@ function computeSetChange(all_data, w1, w2) { // data should contain the set and
       jQuery('#control-explanation-detail').fadeOut();
     }
 
-
+    // test: not used, we pick the winner instead of interpolating
     // interpolate the sets based on the weighted distances to the center
     var comb = {};
     for (var idx in setA) {
@@ -1292,6 +1318,13 @@ function displayDiversity(divers) {
 
 // A function that create / update the plot for a given variable:
 function update(data, sanitized_row_name, x, y, dataSetA) {
+
+  // can we not do anything if the row is not visible?
+  var wrapper = document.querySelector("#my_dataviz svg." + sanitized_row_name);
+
+  if (wrapper.getBoundingClientRect().top < 0) {
+    return; // not visible
+  }
 
   var svg = d3.select("#my_dataviz svg." + sanitized_row_name);
 
@@ -1531,6 +1564,28 @@ function toggleSets(sets, si, sanitized_row_name, x, y) {
   }, 600);
 }
 
+function getTypePerCircle(set_variations) {
+  // return a list with the center for each circle
+  var centers = [];
+  for (var i = 0; i < set_variations.length; i++) {
+    var role = "petal";
+    if (set_variations[i].c.circle == 0) {
+      role = "leaf";
+    }
+    centers.push({ circle: set_variations[i].c.circle, role: role });
+  }
+  // The first point of each region does belong to the circle above,
+  // here give it the circle id so we can color it as part of the circle
+  for (var i = 0; i < set_variations.length; i++) {
+    if (centers[set_variations[i].c.circle] != set_variations[i].c.circle) {
+      centers[set_variations[i].c.circle].circle = set_variations[i].c.circle;
+      centers[set_variations[i].c.circle].role = "seed";
+    }
+  }
+  centers[0].role = "leaf";
+  return centers;
+}
+
 // draw some cells into #controls
 function displayControlPoints() {
   var w = jQuery('#control').width();
@@ -1613,11 +1668,13 @@ function displayControlPoints() {
     return points2;
   }
 
+  // we  should make the bounds smaller by the margin we need for display of the lines
+  var lmargin = 5;
   var bounds = d3.geom.polygon([
-    [0, 0],
-    [0, 200],
-    [200, 200],
-    [200, 0]
+    [0 + lmargin, 0 + lmargin],
+    [0 + lmargin, h - lmargin],
+    [w - lmargin, h - lmargin],
+    [w - lmargin, 0 + lmargin]
   ]);
   // wrong orientation, the reverse fixes the problem
   function circle(cx, cy, r, n) {
@@ -1630,7 +1687,7 @@ function displayControlPoints() {
     points = points.reverse();
     return points;
   }
-  //bounds = d3.geom.polygon(circle(100, 100, 98, 14));
+  //bounds = d3.geom.polygon(circle(100, 100, 98, 15));
   var line = d3.line()
     .curve(d3.curveBasisClosed)
   //var voronoi = d3.geom.voronoi(vertices).map(function (cell) { return bounds.clip(cell); });
@@ -1695,10 +1752,13 @@ function displayControlPoints() {
           dwinner = dist;
         }
       }
+      var types = getTypePerCircle(set_variations);
 
       var cmap = "PuBu";
-      if (set_variations[winner].c.circle != 0) {
+      if (types[winner].role == "seed") { // set_variations[winner].c.circle != 0) {
         cmap = "OrRd";
+      } else if (types[winner].role == "leaf") {
+        cmap = "BuGn";
       }
       return cmap + "q" + (4 % 9) + "-9 region";
     })

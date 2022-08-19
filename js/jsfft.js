@@ -21,7 +21,8 @@ function drawToCanvas(element_id, data) {
 
 // what we actually want would be the peak frequency (highest energy) and the phase
 // at which that happens. Better to do this with a shifted set of basis functions for a 
-// given frequency.
+// given frequency. Oh, no, just clamping the frequency space to the peak position in 
+// real and imag is sufficient.
 function peakDetect(data) {
 
   // lets do this in chunks. We want to detect some peaks at regular intervals
