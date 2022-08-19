@@ -684,6 +684,213 @@ var demo04_06 = [
 ];
 
 
+var demo_max2 = [
+  { // the first set will always be placed in the center
+    name: "setA",
+    idx: 0,
+    set: {},
+    c: { x: 0, y: 0, circle: 0, weight: 0 },
+    description: "No highlight, ignore the other set."
+  },
+  {
+    name: "setB",
+    idx: 1,
+    set: {}, // w1 == 1
+    c: { x: 1, y: 0, circle: 0, weight: 0 },
+    description: "Alternate between Mouse and Human."
+  },
+  {
+    name: "intersection",
+    set: {}, // w1 == 0
+    idx: 2,
+    c: { x: 0, y: 1, circle: 0, weight: 0 },
+    description: "Highlight what is not in the other set."
+  },
+  {
+    name: "intersection",
+    set: {}, // w1 == 0
+    idx: 2,
+    c: { x: 0, y: 1, circle: 0, weight: 0 },
+    description: "Highlight what is not in the other set."
+  },
+  {
+    name: "intersection",
+    set: {}, // w1 == 0
+    idx: 2,
+    c: { x: 0, y: 1, circle: 0, weight: 0 },
+    description: "Highlight what is not in the other set."
+  },
+  {
+    name: "intersection",
+    set: {}, // w1 == 0
+    idx: 2,
+    c: { x: 0, y: 1, circle: 0, weight: 0 },
+    description: "Highlight what is not in the other set."
+  },
+  {
+    name: "frequency peak 01",
+    set: {}, // w1 == 0
+    idx: 3,
+    c: { x: 0, y: -1, circle: 0, weight: 0 },
+    description: "Highlight all values at the slowest repeating frequency.",
+    descLong: "Characteristic frequencies are computed by treating the modification locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and modification type."
+  },
+  {
+    name: "frequency peak 02",
+    set: {}, // w1 == 0
+    idx: 4,
+    c: { x: 0, y: -1, circle: 6, weight: 0 },
+    description: "Highlight all values at the second slowest repeating frequency.",
+    descLong: "Characteristic frequencies are computed by treating the modification locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and modification type."
+  },
+  {
+    name: "frequency peak 03",
+    set: {}, // w1 == 0
+    idx: 5,
+    c: { x: 0, y: -1, circle: 6, weight: 0 },
+    description: "Highlight all values at the third characteristic frequency.",
+    descLong: "Characteristic frequencies are computed by treating the modification locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and modification type."
+  },
+  {
+    name: "frequency peak 04",
+    set: {}, // w1 == 0
+    idx: 6,
+    c: { x: 0, y: -1, circle: 6, weight: 0 },
+    description: "Highlight all values at the fourth repeating frequency.",
+    descLong: "Characteristic frequencies are computed by treating the modification locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and modification type."
+  },
+  {
+    name: "frequency peak 05",
+    set: {}, // w1 == 0
+    idx: 7,
+    c: { x: 0, y: -1, circle: 6, weight: 0 },
+    description: "Highlight all values at the fifth (fastest) repeating frequency.",
+    descLong: "Characteristic frequencies are computed by treating the modification locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and modification type."
+  },
+  {
+    name: "frequency peak 05",
+    set: {}, // w1 == 0
+    idx: 7,
+    c: { x: 0, y: -1, circle: 6, weight: 0 },
+    description: "Highlight all values at the fifth (fastest) repeating frequency.",
+    descLong: "Characteristic frequencies are computed by treating the modification locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and modification type."
+  },
+  {
+    name: "frequency peak 05",
+    set: {}, // w1 == 0
+    idx: 7,
+    c: { x: 0, y: -1, circle: 6, weight: 0 },
+    description: "Highlight all values at the fifth (fastest) repeating frequency.",
+    descLong: "Characteristic frequencies are computed by treating the modification locations as a time series. Peak detection in the Fourier spectrum identifies repeating patterns. Using the detected peak frequency and phase we reconstruct an envelope function that is multiplied with the proteomics data for the current protein and modification type."
+  },
+  {
+    name: "difference",
+    set: {}, // w1 == 0
+    idx: 8,
+    c: { x: 0, y: -1, circle: 0, weight: 0 },
+    description: "Highlight where MOUSE and HUMAN are the same"
+  },
+  {
+    name: "union",
+    set: {}, // w1 == 0
+    idx: 9,
+    c: { x: 0, y: -1, circle: 0, weight: 0 },
+    description: "Highlight what is added by the other"
+  },
+  {
+    name: "union2",
+    set: {}, // w1 == 0
+    idx: 9,
+    c: { x: 0, y: -1, circle: 0, weight: 0 },
+    description: "Highlight what is added by the other"
+  },
+  {
+    name: "union",
+    set: {}, // w1 == 0
+    idx: 9,
+    c: { x: 0, y: -1, circle: 0, weight: 0 },
+    description: "Highlight what is added by the other"
+  },
+  {
+    name: "union",
+    set: {}, // w1 == 0
+    idx: 9,
+    c: { x: 0, y: -1, circle: 0, weight: 0 },
+    description: "Highlight what is added by the other"
+  },
+  {
+    name: "Jaccard",
+    set: {}, // w1 == 0
+    idx: 10,
+    c: { x: 0, y: -1, circle: 0, weight: 0 },
+    description: "Highlight relative difference using the Jaccard index"
+  },
+  {
+    name: "0",
+    set: {}, // w1 == 0
+    idx: 11,
+    c: { x: -1, y: 0, circle: 0, weight: 300 },
+    description: "Highlight what is in this set",
+    descLong: "The marginal distribution of modification values for a given protein and modification type is described by quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+  },
+  {
+    name: "min-q1",
+    set: {}, // w1 == 0
+    idx: 12,
+    c: { x: 0, y: -1, circle: 20, weight: 0 },
+    description: "Highlight all values that are between the minimum and q1",
+    descLong: "The marginal distribution of modification values for a given protein and modification type is described by quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+  },
+  {
+    name: "q1-q2",
+    set: {}, // w1 == 0
+    idx: 13,
+    c: { x: 0, y: -1, circle: 20, weight: 0 },
+    description: "Highlight all values that are between q1 and q2",
+    descLong: "The marginal distribution of modification values for a given protein and modification type is described by quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+  },
+  {
+    name: "q1-q3",
+    set: {}, // w1 == 0
+    idx: 12,
+    c: { x: 0, y: -1, circle: 20, weight: 100 },
+    description: "Highlight values in the middle (between q1 and q3)",
+    descLong: "The marginal distribution of modification values for a given protein and modification type is described by quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+  },
+  {
+    name: "q2-q3",
+    set: {}, // w1 == 0
+    idx: 15,
+    c: { x: 0, y: -1, circle: 20, weight: 0 },
+    description: "Highlight all values that are between q2 and q3",
+    descLong: "The marginal distribution of modification values for a given protein and modification type is described by quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+  },
+  {
+    name: "q3-max",
+    set: {}, // w1 == 0
+    idx: 16,
+    c: { x: 0, y: -1, circle: 20, weight: 0 },
+    description: "Highlight all values that are between q3 and the maximum value",
+    descLong: "The marginal distribution of modification values for a given protein and modification type is described by quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+  },
+  {
+    name: "extremes",
+    set: {}, // w1 == 0
+    idx: 13,
+    c: { x: 0, y: -1, circle: 20, weight: 0 },
+    description: "Highlight all extreme values, values that are below q1 or above q3",
+    descLong: "The marginal distribution of modification values for a given protein and modification type is described by quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+  },
+  {
+    name: "extremes",
+    set: {}, // w1 == 0
+    idx: 13,
+    c: { x: 0, y: -1, circle: 20, weight: 0 },
+    description: "Highlight all extreme values, values that are below q1 or above q3",
+    descLong: "The marginal distribution of modification values for a given protein and modification type is described by quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
+  }
+];
+
 var demo_max = [
   { // the first set will always be placed in the center
     name: "setA",
@@ -824,6 +1031,7 @@ var demo_max = [
     descLong: "The marginal distribution of modification values for a given protein and modification type is described by quartiles. 25% of the values are expected to be between the minimum and q1, between q1 and q2, between q2 and q3, and between q3 and the maximum value."
   },
 ];
+
 
 var set_variations = demo_max;
 //var set_variations = demo04;
@@ -1767,12 +1975,30 @@ function displayControlPoints() {
       }
       var types = getTypePerCircle(set_variations);
 
+
       var cmap = "PuBu";
-      if (types[winner].role == "seed") { // set_variations[winner].c.circle != 0) {
-        cmap = "OrRd";
-      } else if (types[winner].role == "leaf") {
-        cmap = "BuGn";
+      var leaf_coloring = false;
+      if (leaf_coloring) {
+        if (types[winner].role == "seed") { // set_variations[winner].c.circle != 0) {
+          cmap = "OrRd";
+        } else if (types[winner].role == "leaf") {
+          cmap = "BuGn";
+        }
+      } else {
+        // more conservative coloring
+        if (set_variations[winner].c.circle == 0 || winner == 0) {
+          cmap = "BuGn";
+        }
+        if (set_variations[winner].c.circle == 3 || winner == 3) {
+          cmap = "OrRd";
+        }
+        if (set_variations[winner].c.circle == 11 || winner == 11) {
+          cmap = "PuBu";
+        }
+        // set color by circle identity 
+        // 0, 3, and 11
       }
+
       return cmap + "q" + (4 % 9) + "-9 region";
     })
     //Our new hover effects
