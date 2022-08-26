@@ -25,3 +25,7 @@ php -S localhost:3000
 ```
 
 and open a web-browser with the url "http://localhost:3000".
+
+## Example application
+
+In order to see the application working you can use the github pages site that shows the current status (branch main): [Mouse-Human-Hybrids](https://mmiv-center.github.io/human-mouse-hybrids/).
