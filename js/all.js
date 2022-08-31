@@ -1034,7 +1034,7 @@ var demo_max = [
 
 
 var set_variations = demo_max;
-//var set_variations = demo04;
+//var set_variations = demo06_weight;
 
 // compute set change from data1 to data2 using two weights from -1 to 1
 function computeSetChange(all_data, w1, w2) { // data should contain the set and type columns
@@ -1785,12 +1785,16 @@ function toggleSets(sets, si, sanitized_row_name, x, y) {
 function getTypePerCircle(set_variations) {
   // return a list with the center for each circle
   var centers = [];
+  var circle_ids = [0]; // we always have at least one circle id
   for (var i = 0; i < set_variations.length; i++) {
     var role = "petal";
     if (set_variations[i].c.circle == 0) {
       role = "leaf";
     }
-    centers.push({ circle: set_variations[i].c.circle, role: role });
+    if (circle_ids.indexOf(set_variations[i].c.circle) == -1) {
+      circle_ids.push(set_variations[i].c.circle);
+    }
+    centers.push({ circle: set_variations[i].c.circle, role: role, id: circle_ids.indexOf(set_variations[i].c.circle) });
   }
   // The first point of each region does belong to the circle above,
   // here give it the circle id so we can color it as part of the circle
@@ -1798,6 +1802,7 @@ function getTypePerCircle(set_variations) {
     if (centers[set_variations[i].c.circle] != set_variations[i].c.circle) {
       centers[set_variations[i].c.circle].circle = set_variations[i].c.circle;
       centers[set_variations[i].c.circle].role = "seed";
+      centers[set_variations[i].c.circle].id = circle_ids.indexOf(set_variations[i].c.circle);
     }
   }
   centers[0].role = "leaf";
@@ -1837,6 +1842,8 @@ function displayControlPoints() {
     .attr("width", w)
     .attr("height", h)
     .attr("class", "PuBu")
+    .attr("role", "img")
+    .attr("aria-labelledby", "title desc")
   //.attr("class", "Paired")
   //.attr("class", "PiYG")
   //.on("mousemove", updatePickPosition);
@@ -1954,6 +1961,25 @@ function displayControlPoints() {
     .data(voronoi)
     .enter().append("svg:path")
     //.attr("clip-path", "url(#clipCircle)") // make a circular clip around everything
+    .attr("zone", function (d, i) {
+      var geo_center = d.reduce(function (p, q) {
+        return [p[0] + q[0], p[1] + q[1]];
+      }, [0, 0]);
+      geo_center[0] /= d.length;
+      geo_center[1] /= d.length;
+      var winner = 0;
+      var dwinner = Infinity;
+      for (var j = 0; j < vertices.length; j++) {
+        var dist = (vertices[j][0] - geo_center[0]) * (vertices[j][0] - geo_center[0]) +
+          (vertices[j][1] - geo_center[1]) * (vertices[j][1] - geo_center[1]);
+        if (dist < dwinner) {
+          winner = j;
+          dwinner = dist;
+        }
+      }
+      var types = getTypePerCircle(set_variations);
+      return "winner-" + winner + "-" + types[winner].role + "-" + set_variations[winner].c.circle + "-" + types[winner].id;
+    })
     .attr("class", function (d, i) { // color the cells
       // the identify of the cells is no longer given by the index. We need to compute the
       // identify again if we need it. Maybe compute the center of mass and pick a winner with
@@ -1974,7 +2000,6 @@ function displayControlPoints() {
         }
       }
       var types = getTypePerCircle(set_variations);
-
 
       var cmap = "PuBu";
       var leaf_coloring = false;
@@ -1997,6 +2022,15 @@ function displayControlPoints() {
         }
         // set color by circle identity 
         // 0, 3, and 11
+      }
+
+      // use the id as coloring (does that work?)
+      if (types[winner].id == 0) {
+        cmap = "BuGn";
+      } else if (types[winner].id == 1) {
+        cmap = "PuBu";
+      } else {
+        cmap = "OrRd";
       }
 
       return cmap + "q" + (4 % 9) + "-9 region";
@@ -2023,8 +2057,9 @@ function displayControlPoints() {
         .raise();
     })
     //.attr("d", function (d) { return "M" + d.join("L") + "Z"; });
-    .attr("d", function (point, i) { return line(resampleSegments(voronoi[i])); });
-  //.attr("d", function (point, i) { return line(voronoi[i]); });
+    .attr("role", "presentation")
+    .attr("d", function (point, i) { return line(resampleSegments(voronoi[i])); })
+    //.attr("d", function (point, i) { return line(voronoi[i]); });
 
   svg.selectAll("circle")
     .data(vertices)
@@ -2042,6 +2077,13 @@ function displayControlPoints() {
     .attr("cx", 100)
     .attr("cy", 100);
 
+  svg.append("title")
+    .attr("id", "title")
+    .text("Control zones for switching visualization modes");
+
+  svg.append("desc")
+    .attr("id", "desc")
+    .text("Each region in this control is drawn as a polygon. Click on a polygon to activate its highlight action in the data display.");
 }
 
 jQuery(window).resize(function () {
