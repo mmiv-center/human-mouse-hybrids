@@ -1701,6 +1701,12 @@ function setup(row_name, sets, identity) {
       jQuery('#tooltip-neighbors').text("Neighboring sites are " + also + "dominated by \"" + neighbors + "\" modifications.");
     }
 
+    // if we are on the right side of the page we should show the window more towards the middle
+    if ((mx + 10) > (2.0 * width / 3.0)) {
+      console.log("on right side!");
+      mx -= (jQuery('#tooltip').width() + 20);
+    }
+
     jQuery('#tooltip')
       .css("left", (mx + 10) + "px")
       .css("top", (my) + "px")
@@ -2100,6 +2106,7 @@ jQuery(document).ready(function () {
   // display control point influence voronoi cells
   setTimeout(function () {
     displayControlPoints();
+    jQuery('div.lds-ellipsis').fadeOut();
   }, 100);
 
   loadData(function (row_name, sets) {
@@ -2119,6 +2126,7 @@ jQuery(document).ready(function () {
     y = objs[2];
     //update(data1, sanitized_row_name, x, y);
     toggleSets(sets, 0, sanitized_row_name, x, y);
+    jQuery('div.lds-ellipsis').fadeOut();
   });
 
   // recalculate the second dataset again 
