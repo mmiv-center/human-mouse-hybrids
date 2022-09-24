@@ -2106,8 +2106,8 @@ jQuery(document).ready(function () {
   // display control point influence voronoi cells
   setTimeout(function () {
     displayControlPoints();
-    jQuery('div.lds-ellipsis').fadeOut();
-  }, 100);
+      jQuery('div.loading').fadeOut();
+  }, 1000);
 
   loadData(function (row_name, sets) {
     //console.log("setup row_name: " + row_name);
@@ -2126,7 +2126,7 @@ jQuery(document).ready(function () {
     y = objs[2];
     //update(data1, sanitized_row_name, x, y);
     toggleSets(sets, 0, sanitized_row_name, x, y);
-    jQuery('div.lds-ellipsis').fadeOut();
+    jQuery('div.loading').fadeOut();
   });
 
   // recalculate the second dataset again 
